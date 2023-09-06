@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Character Forge',
-  description: 'Build your DnD Character quicly',
+  description: 'Build your DnD Character quickly',
 }
 
 export default function RootLayout({
