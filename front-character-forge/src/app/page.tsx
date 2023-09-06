@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <h1>Character Forge! :D</h1>
-      <p>test verified again</p>
+      <p>test verified again without password</p>
     </main>
   )
 }
