@@ -1,6 +1,6 @@
-package com.jawbr.repository;
+package com.jawbr.dnd5e.characterforge.repository;
 
-import com.jawbr.modal.entity.Race;
+import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RaceRepository extends JpaRepository<Race, Integer> {

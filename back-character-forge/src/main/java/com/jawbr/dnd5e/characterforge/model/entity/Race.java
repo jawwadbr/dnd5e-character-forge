@@ -1,6 +1,6 @@
-package com.jawbr.modal.entity;
+package com.jawbr.dnd5e.characterforge.model.entity;
 
-import com.jawbr.modal.util.Size;
+import com.jawbr.dnd5e.characterforge.model.util.Size;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

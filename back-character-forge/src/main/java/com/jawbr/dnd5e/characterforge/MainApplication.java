@@ -1,4 +1,4 @@
-package com.jawbr;
+package com.jawbr.dnd5e.characterforge;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

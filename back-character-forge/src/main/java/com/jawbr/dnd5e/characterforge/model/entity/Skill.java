@@ -1,11 +1,12 @@
-package com.jawbr.modal.entity;
+package com.jawbr.dnd5e.characterforge.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,6 +42,8 @@ public class Skill {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @ManyToMany(mappedBy = "skills")
-    private List<AbilityScore> abilityScores;
+    @ManyToOne // Many Skills can belong to One AbilityScore
+    @JoinColumn(name = "ability_score_id")
+    private AbilityScore abilityScore;
+
 }

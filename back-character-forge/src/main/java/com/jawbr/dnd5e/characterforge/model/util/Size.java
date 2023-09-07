@@ -1,4 +1,4 @@
-package com.jawbr.modal.util;
+package com.jawbr.dnd5e.characterforge.model.util;
 
 public enum Size {
     Tiny,
