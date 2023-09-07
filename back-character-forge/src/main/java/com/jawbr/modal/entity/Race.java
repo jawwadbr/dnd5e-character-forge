@@ -1,4 +1,4 @@
-package com.jawbr.modal.entity.race;
+package com.jawbr.modal.entity;
 
 import com.jawbr.modal.util.Size;
 import jakarta.persistence.Column;
@@ -8,18 +8,25 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "race")
 public class Race {
@@ -29,7 +36,7 @@ public class Race {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "index_name", unique = true, nullable = false)
+    @Column(name = "index_name", nullable = false)
     private String indexName;
 
     @Column(name = "race_name", nullable = false)
@@ -41,8 +48,8 @@ public class Race {
     @Column(name = "age_desc", columnDefinition = "TEXT", nullable = false)
     private String age_desc;
 
-    @Column(name = "aligment", columnDefinition = "TEXT", nullable = false)
-    private String aligment;
+    @Column(name = "alignment", columnDefinition = "TEXT", nullable = false)
+    private String alignment;
 
     @Column(name = "size")
     @Enumerated(EnumType.STRING)
@@ -56,5 +63,14 @@ public class Race {
 
     @Column(name = "url", nullable = false)
     private String url;
+
+    // TODO - NOT TESTED
+    @ManyToMany
+    @JoinTable(
+            name = "race_ability_scores",
+            joinColumns = @JoinColumn(name = "race_id"),
+            inverseJoinColumns = @JoinColumn(name = "ability_score_id")
+    )
+    private List<AbilityScore> abilityScores;
 
 }
