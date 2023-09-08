@@ -2,8 +2,9 @@ package com.jawbr.dnd5e.characterforge.service;
 
 import com.github.slugify.Slugify;
 import com.jawbr.dnd5e.characterforge.dto.mapper.skill.SkillDTOMapper;
-import com.jawbr.dnd5e.characterforge.repository.SkillRepository;
 import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillDTO;
+import com.jawbr.dnd5e.characterforge.exception.SkillNotFoundException;
+import com.jawbr.dnd5e.characterforge.repository.SkillRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +29,6 @@ public class SkillService {
         return Optional.of(skillRepository.findAll())
                 .filter(list -> !list.isEmpty())
                 .map(list -> list.stream().map(skillDTOMapper).toList())
-                .orElseThrow(() -> new RuntimeException("No skills found!"));
+                .orElseThrow(() -> new SkillNotFoundException("No skills found."));
     }
 }

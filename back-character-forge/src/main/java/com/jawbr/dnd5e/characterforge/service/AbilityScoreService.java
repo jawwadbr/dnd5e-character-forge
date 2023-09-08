@@ -3,6 +3,7 @@ package com.jawbr.dnd5e.characterforge.service;
 import com.github.slugify.Slugify;
 import com.jawbr.dnd5e.characterforge.dto.mapper.abilityScore.AbilityScoreDTOMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
+import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
 import com.jawbr.dnd5e.characterforge.repository.AbilityScoreRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,6 @@ public class AbilityScoreService {
         return Optional.of(abilityScoreRepository.findAll())
                 .filter(list -> !list.isEmpty())
                 .map(list -> list.stream().map(abilityScoreDTOMapper).toList())
-                .orElseThrow(() -> new RuntimeException("No ability scores found!"));
+                .orElseThrow(() -> new AbilityScoreNotFoundException("No ability scores found."));
     }
 }
