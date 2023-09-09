@@ -1,6 +1,7 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
 import com.jawbr.dnd5e.characterforge.model.util.Size;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -64,13 +65,12 @@ public class Race {
     @Column(name = "url", nullable = false)
     private String url;
 
-    // TODO - NOT TESTED
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "race_ability_scores",
-            joinColumns = @JoinColumn(name = "race_id"),
-            inverseJoinColumns = @JoinColumn(name = "ability_score_id")
+            joinColumns = @JoinColumn(name = "race_id_fk"),
+            inverseJoinColumns = @JoinColumn(name = "ability_score_id_fk")
     )
-    private List<AbilityScore> abilityScores;
+    private List<AbilityScore> abilityBonuses;
 
 }

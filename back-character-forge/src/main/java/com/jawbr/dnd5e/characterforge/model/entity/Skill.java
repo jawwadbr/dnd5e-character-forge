@@ -43,7 +43,7 @@ public class Skill {
     private String url;
 
     @ManyToOne // Many Skills can belong to One AbilityScore
-    @JoinColumn(name = "ability_score_id")
+    @JoinColumn(name = "ability_score_id_fk")
     private AbilityScore abilityScore;
 
 }

@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -46,10 +45,6 @@ public class AbilityScore {
 
     @Column(name = "url", nullable = false)
     private String url;
-
-    // TODO - NOT TESTED
-    @ManyToMany(mappedBy = "abilityScores")
-    private List<Race> races;
 
     // AbilityScore can have multiples Skills
     @OneToMany(mappedBy = "abilityScore", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
