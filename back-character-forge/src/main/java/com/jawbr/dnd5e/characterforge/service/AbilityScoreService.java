@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+ */
 @Service
 public class AbilityScoreService {
 
@@ -19,12 +22,21 @@ public class AbilityScoreService {
 
     private static final String URL = "/api/ability-scores/";
 
-    public AbilityScoreService(AbilityScoreRepository abilityScoreRepository, AbilityScoreDTOMapper abilityScoreDTOMapper) {
+    public AbilityScoreService(AbilityScoreRepository abilityScoreRepository,
+                               AbilityScoreDTOMapper abilityScoreDTOMapper)
+    {
         this.abilityScoreRepository = abilityScoreRepository;
         this.abilityScoreDTOMapper = abilityScoreDTOMapper;
         this.slugify = Slugify.builder().build();
     }
 
+    /**
+     * Method to find all Ability Scores inside the database
+     *
+     * @return a List containing all Ability Scores mapped into AbilityScoreDTO
+     * @throws AbilityScoreNotFoundException when no ability score is found inside the database
+     * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+     */
     public List<AbilityScoreDTO> findAllAbilityScores() {
         return Optional.of(abilityScoreRepository.findAll())
                 .filter(list -> !list.isEmpty())

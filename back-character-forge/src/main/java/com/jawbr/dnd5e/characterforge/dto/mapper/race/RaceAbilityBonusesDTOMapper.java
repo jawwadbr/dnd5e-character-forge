@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
 
+/**
+ * Method to map {@link RaceAbilityScoreBonus} entity to {@link RaceAbilityBonusesDTO}
+ *
+ * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+ */
 @Service
 public class RaceAbilityBonusesDTOMapper implements Function<RaceAbilityScoreBonus, RaceAbilityBonusesDTO> {
 

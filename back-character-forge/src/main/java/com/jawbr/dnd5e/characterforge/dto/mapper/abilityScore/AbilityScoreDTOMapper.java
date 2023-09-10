@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Method to map {@link AbilityScore} entity to {@link AbilityScoreDTO}
+ *
+ * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+ */
 @Service
 public class AbilityScoreDTOMapper implements Function<AbilityScore, AbilityScoreDTO> {
 

@@ -12,7 +12,7 @@ public class SkillExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(SkillNotFoundException exc) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

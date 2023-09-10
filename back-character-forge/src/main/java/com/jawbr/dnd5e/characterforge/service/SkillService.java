@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+ */
 @Service
 public class SkillService {
 
@@ -19,12 +22,21 @@ public class SkillService {
 
     private static final String URL = "/api/skills/";
 
-    public SkillService(SkillRepository skillRepository, SkillDTOMapper skillDTOMapper) {
+    public SkillService(SkillRepository skillRepository,
+                        SkillDTOMapper skillDTOMapper)
+    {
         this.skillRepository = skillRepository;
         this.skillDTOMapper = skillDTOMapper;
         this.slugify = Slugify.builder().build();
     }
 
+    /**
+     * Method to find all Skills inside the database
+     *
+     * @return a List containing all Skills mapped into SkillDTO
+     * @throws SkillNotFoundException when no skills are found inside the database
+     * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+     */
     public List<SkillDTO> findAllSkills() {
         return Optional.of(skillRepository.findAll())
                 .filter(list -> !list.isEmpty())

@@ -11,7 +11,7 @@ public class GenericHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(Exception exc) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage(), System.currentTimeMillis());
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), exc.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
