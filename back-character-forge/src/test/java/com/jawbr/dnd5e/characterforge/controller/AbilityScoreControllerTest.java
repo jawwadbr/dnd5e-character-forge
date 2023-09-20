@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -70,6 +71,7 @@ class AbilityScoreControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].index", is(abilityScoreDTO.index())))
                 .andExpect(jsonPath("$[0].short_name", is(abilityScoreDTO.short_name())))
                 .andExpect(jsonPath("$[0].full_name", is(abilityScoreDTO.full_name())))
