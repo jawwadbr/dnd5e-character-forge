@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class LanguageExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleExeption(LanguageNotFoundException exc) {
+    public ResponseEntity<ErrorResponse> handleException(LanguageNotFoundException exc) {
         ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }

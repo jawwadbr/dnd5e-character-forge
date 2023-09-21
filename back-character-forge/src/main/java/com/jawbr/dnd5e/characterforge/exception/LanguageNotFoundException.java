@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Getter
 @Setter
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class LanguageNotFoundException extends RuntimeException{
+public class LanguageNotFoundException extends RuntimeException {
 
     private String message;
 }
