@@ -2,13 +2,13 @@ package com.jawbr.dnd5e.characterforge.controller;
 
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreSkillDTO;
+import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
 import com.jawbr.dnd5e.characterforge.service.AbilityScoreService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,7 +35,7 @@ class AbilityScoreControllerTest {
     @MockBean
     private AbilityScoreService abilityScoreService;
 
-    private String PATH = "/api/ability-scores";
+    private final String PATH = "/api/ability-scores";
 
     private AbilityScoreSkillDTO abilityScoreSkillDTO;
     private AbilityScoreDTO abilityScoreDTO;
@@ -62,8 +62,7 @@ class AbilityScoreControllerTest {
     }
 
     @Test
-    void findAllAbility() throws Exception {
-
+    void findAllAbilityScores() throws Exception {
         List<AbilityScoreDTO> abilityScoreDTOS = Collections.singletonList(abilityScoreDTO);
 
         when(abilityScoreService.findAllAbilityScores()).thenReturn(abilityScoreDTOS);
@@ -80,6 +79,19 @@ class AbilityScoreControllerTest {
                 .andExpect(jsonPath("$[0].skills[0].index", is(abilityScoreSkillDTO.index())))
                 .andExpect(jsonPath("$[0].skills[0].name", is(abilityScoreSkillDTO.name())))
                 .andExpect(jsonPath("$[0].skills[0].url", is(abilityScoreSkillDTO.url())))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    void cannotFindAllAbility() throws Exception {
+        when(abilityScoreService.findAllAbilityScores())
+                .thenThrow(new AbilityScoreNotFoundException("No ability scores found."));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(PATH)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("No ability scores found.")))
                 .andDo(MockMvcResultHandlers.print());
     }
 

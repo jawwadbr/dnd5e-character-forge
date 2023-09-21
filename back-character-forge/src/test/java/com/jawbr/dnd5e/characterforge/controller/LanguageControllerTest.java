@@ -1,6 +1,7 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
 import com.jawbr.dnd5e.characterforge.dto.response.language.LanguageDTO;
+import com.jawbr.dnd5e.characterforge.exception.LanguageNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.util.LanguageType;
 import com.jawbr.dnd5e.characterforge.service.LanguageService;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,7 @@ class LanguageControllerTest {
     @MockBean
     private LanguageService languageService;
 
-    private String PATH = "/api/languages";
+    private final String PATH = "/api/languages";
 
     private LanguageDTO languageDTO;
 
@@ -67,4 +68,18 @@ class LanguageControllerTest {
                 .andExpect(jsonPath("$[0].url", is(languageDTO.url())))
                 .andDo(MockMvcResultHandlers.print());
     }
+
+    @Test
+    void cannotFindAllLanguages() throws Exception {
+        when(languageService.findAllLanguages())
+                .thenThrow(new LanguageNotFoundException("No languages found."));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(PATH)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("No languages found.")))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 }

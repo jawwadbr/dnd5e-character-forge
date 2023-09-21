@@ -2,6 +2,7 @@ package com.jawbr.dnd5e.characterforge.controller;
 
 import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillAbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillDTO;
+import com.jawbr.dnd5e.characterforge.exception.SkillNotFoundException;
 import com.jawbr.dnd5e.characterforge.service.SkillService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class SkillControllerTest {
     @MockBean
     private SkillService skillService;
 
-    private String PATH = "/api/skills";
+    private final String PATH = "/api/skills";
 
     private SkillDTO skillDTO;
     private SkillAbilityScoreDTO abilityScoreDTO;
@@ -58,7 +59,6 @@ class SkillControllerTest {
 
     @Test
     void findAllSkills() throws Exception {
-
         List<SkillDTO> skillDTOList = Collections.singletonList(skillDTO);
 
         when(skillService.findAllSkills()).thenReturn(skillDTOList);
@@ -77,4 +77,18 @@ class SkillControllerTest {
                 .andDo(MockMvcResultHandlers.print());
 
     }
+
+    @Test
+    void cannotFindAllSkills() throws Exception {
+        when(skillService.findAllSkills())
+                .thenThrow(new SkillNotFoundException("No skills found."));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(PATH)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("No skills found.")))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 }

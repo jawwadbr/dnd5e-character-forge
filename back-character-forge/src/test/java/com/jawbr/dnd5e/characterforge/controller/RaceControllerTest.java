@@ -4,10 +4,10 @@ import com.jawbr.dnd5e.characterforge.dto.response.race.RaceAbilityBonusesDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceLanguagesDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RacialAbilityScoreBonusDTO;
+import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import com.jawbr.dnd5e.characterforge.service.RaceService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -38,7 +38,7 @@ class RaceControllerTest {
     @MockBean
     private RaceService raceService;
 
-    private String PATH = "/api/races";
+    private final String PATH = "/api/races";
 
     private RaceDTO raceDTO;
     private RaceAbilityBonusesDTO raceAbilityBonusesDTO;
@@ -88,7 +88,6 @@ class RaceControllerTest {
     // This test will need to be modified in the future to pass when new Race implementations are made
     @Test
     void findAllRaces() throws Exception {
-
         List<RaceDTO> raceDTOS = Collections.singletonList(raceDTO);
 
         when(raceService.findAllRaces()).thenReturn(raceDTOS);
@@ -120,4 +119,18 @@ class RaceControllerTest {
                 .andDo(MockMvcResultHandlers.print());
 
     }
+
+    @Test
+    void cannotFindAllRaces() throws Exception {
+        when(raceService.findAllRaces())
+                .thenThrow(new RaceNotFoundException("No races found."));
+
+        mockMvc.perform(MockMvcRequestBuilders.get(PATH)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status", is(404)))
+                .andExpect(jsonPath("$.message", is("No races found.")))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 }
