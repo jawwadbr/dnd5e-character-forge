@@ -11,9 +11,11 @@
 }
 
 .textarea {
+  font-family: '__Inter_e66fe9', '__Inter_Fallback_e66fe9';
+  font-weight: 500;
   font-size: 12px;
   text-align: left;
-  width: calc(100% - 20px - 2px);
+  width: 100%;
   border-radius: 10px;
   padding: 10px;
   resize: none;
@@ -32,13 +34,17 @@ form.charsheet {
   margin-right: auto;
   margin-left: auto;
   margin-top: 10px;
+  background-color: #fff;
+  padding: 10px;
 }
+
 form.charsheet div.textblock {
   display: flex;
   flex-direction: column-reverse;
   width: 100%;
   align-items: center;
 }
+
 form.charsheet div.textblock label {
   text-align: center;
   border: 1px solid black;
@@ -49,35 +55,44 @@ form.charsheet div.textblock label {
   padding: 4px 0;
   font-weight: bold;
 }
-form.charsheet div.textblock .textarea {
+
+form.charsheet div.textblock textarea {
   border: 1px solid black;
 }
+
 form.charsheet ul {
   margin: 0;
   padding: 0;
 }
+
 form.charsheet ul li {
   list-style-image: none;
   display: block;
 }
+
 form.charsheet ::-moz-placeholder {
   color: #bbb;
 }
+
 form.charsheet :-ms-input-placeholder {
   color: #bbb;
 }
+
 form.charsheet ::placeholder {
   color: #bbb;
 }
+
 form.charsheet label {
   text-transform: uppercase;
   font-size: 12px;
 }
+
 form.charsheet .headerCharsheet {
   display: flex;
   align-content: stretch;
   align-items: stretch;
 }
+
 form.charsheet .headerCharsheet section.charname {
   border: 1px solid black;
   border-right: 0;
@@ -91,14 +106,17 @@ form.charsheet .headerCharsheet section.charname {
   top: 0;
   margin: auto;
 }
+
 form.charsheet .headerCharsheet section.charname input {
   padding: 0.5em;
   margin: 5px;
   border: 0;
 }
+
 form.charsheet .headerCharsheet section.charname label {
   padding-left: 1em;
 }
+
 form.charsheet .headerCharsheet section.misc {
   width: 70%;
   border: 1px solid black;
@@ -106,28 +124,34 @@ form.charsheet .headerCharsheet section.misc {
   padding-left: 1em;
   padding-right: 1em;
 }
+
 form.charsheet .headerCharsheet section.misc ul {
   padding: 10px 0px 5px 0px;
   display: flex;
   flex-wrap: wrap;
 }
+
 form.charsheet .headerCharsheet section.misc ul li {
   width: 33.33333%;
   display: flex;
   flex-direction: column-reverse;
 }
+
 form.charsheet .headerCharsheet section.misc ul li label {
   margin-bottom: 5px;
 }
+
 form.charsheet .headerCharsheet section.misc ul li input {
   border: 0;
   border-bottom: 1px solid #ddd;
 }
+
 form.charsheet .mainContent {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
 }
+
 form.charsheet .mainContent div.labelContainer {
   position: relative;
   width: 100%;
@@ -137,6 +161,7 @@ form.charsheet .mainContent div.labelContainer {
   border-left: 0;
   text-align: center;
 }
+
 form.charsheet .mainContent div.labelContainer > label {
   position: absolute;
   left: 0;
@@ -145,27 +170,33 @@ form.charsheet .mainContent div.labelContainer > label {
   width: 100%;
   font-size: 8px;
 }
+
 form.charsheet .mainContent > section {
   width: 32%;
   display: flex;
   flex-direction: column;
 }
+
 form.charsheet .mainContent > section section.attributes {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores {
   width: 101px;
   background-color: #bbb;
   border-radius: 10px;
   padding-bottom: 5px;
+  margin-right: 5px;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores label {
   font-size: 8px;
   font-weight: bold;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores ul {
   display: flex;
   flex-direction: column;
@@ -173,6 +204,7 @@ form.charsheet .mainContent > section section.attributes div.scores ul {
   align-items: center;
   height: 100%;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores ul li {
   height: 80px;
   width: 70px;
@@ -183,20 +215,24 @@ form.charsheet .mainContent > section section.attributes div.scores ul li {
   flex-direction: column;
   border-radius: 10px;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores ul li input {
   width: 100%;
   padding: 0;
   border: 0;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores ul li div.score input {
   text-align: center;
   font-size: 40px;
   padding: 2px 0px 0px 0px;
   background: white;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores ul li div.modifier {
   margin-top: 3px;
 }
+
 form.charsheet .mainContent > section section.attributes div.scores ul li div.modifier input {
   background: white;
   width: 30px;
@@ -206,11 +242,13 @@ form.charsheet .mainContent > section section.attributes div.scores ul li div.mo
   margin: -1px;
   text-align: center;
 }
+
 form.charsheet .mainContent > section section.attributes div.attrApplications div.inspiration {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
 }
+
 form.charsheet .mainContent > section section.attributes div.attrApplications div.inspiration input {
   -webkit-appearance: none;
      -moz-appearance: none;
@@ -219,11 +257,13 @@ form.charsheet .mainContent > section section.attributes div.attrApplications di
   padding: 15px;
   border-radius: 10px;
 }
+
 form.charsheet .mainContent > section section.attributes div.attrApplications div.proficiencybonus {
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
 }
+
 form.charsheet .mainContent > section section.attributes div.attrApplications div.proficiencybonus input {
   width: 30px;
   height: 28px;
@@ -293,7 +333,7 @@ form.charsheet .mainContent > section div.passivePerception input {
   border: 1px solid black;
   border-radius: 10px;
 }
-form.charsheet .mainContent > section div.otherprofs .textarea {
+form.charsheet .mainContent > section div.otherprofs textarea {
   height: 26em;
 }
 form.charsheet .mainContent section.combat {
@@ -483,6 +523,7 @@ form.charsheet .mainContent section.combat > div.deathsaves > div > div.marks di
 form.charsheet .mainContent section.combat > div.deathsaves > div div.bubbles {
   flex: 1 40%;
   margin-left: 5px;
+
 }
 form.charsheet .mainContent section.combat > div.deathsaves > div div.bubbles input[type=checkbox] {
   -webkit-appearance: none;
@@ -492,6 +533,7 @@ form.charsheet .mainContent section.combat > div.deathsaves > div div.bubbles in
   height: 10px;
   border: 1px solid black;
   border-radius: 10px;
+  margin-right: 3px;
 }
 form.charsheet .mainContent section.combat > div.deathsaves > div div.bubbles input[type=checkbox]:checked {
   background-color: black;
@@ -524,7 +566,7 @@ form.charsheet .mainContent section.attacksandspellcasting > div > table input {
   font-size: 10px;
   padding: 3px;
 }
-form.charsheet .mainContent section.attacksandspellcasting > div .textarea {
+form.charsheet .mainContent section.attacksandspellcasting > div textarea {
   border: 0;
 }
 form.charsheet .mainContent section.equipment {
@@ -543,6 +585,7 @@ form.charsheet .mainContent section.equipment > div > div.money ul {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  margin-right: 5px;
 }
 form.charsheet .mainContent section.equipment > div > div.money ul > li {
   display: flex;
@@ -570,7 +613,7 @@ form.charsheet .mainContent section.equipment > div > label {
   text-align: center;
   flex: 100%;
 }
-form.charsheet .mainContent section.equipment > div > .textarea {
+form.charsheet .mainContent section.equipment > div > textarea {
   flex: 1;
   border: 0;
 }
@@ -591,7 +634,7 @@ form.charsheet .mainContent section.flavor div label {
   font-size: 10px;
   margin-top: 3px;
 }
-form.charsheet .mainContent section.flavor div .textarea {
+form.charsheet .mainContent section.flavor div textarea {
   border: 0;
   border-radius: 0;
   height: 4em;
@@ -618,7 +661,7 @@ form.charsheet .mainContent section.features div {
 form.charsheet .mainContent section.features div label {
   text-align: center;
 }
-form.charsheet .mainContent section.features div .textarea {
+form.charsheet .mainContent section.features div textarea {
   border: 0;
   padding: 5px;
   height: 43em;

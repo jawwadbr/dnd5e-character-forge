@@ -1,0 +1,29 @@
+.charGeneratorContainer form{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.charGeneratorContainer form .charField {
+    width: 40%;
+    margin: 20px 10px;
+}
+
+.charGeneratorContainer form .charField input {
+    outline: none;
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+}
+
+.charGeneratorContainer form .buttonGenerate {
+    width: 100%;
+    text-align: center;
+}
+
+.charGeneratorContainer form .buttonGenerate a {
+    font-size: 20px;
+}

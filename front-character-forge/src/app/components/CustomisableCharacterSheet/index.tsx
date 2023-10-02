@@ -1,5 +1,6 @@
 import styles from './CustomisableCharacterSheet.module.css'
 
+
 export default function CustomisableCharacterSheet() {
     async function onSubmit() {
 
@@ -9,7 +10,8 @@ export default function CustomisableCharacterSheet() {
         <form className={styles.charsheet}>
             <div className={styles.headerCharsheet}>
                 <section className={styles.charname}>
-                    <label htmlFor="charname">Character Name</label><input name="charname" placeholder="Kairus Stronghold" />
+                    <label htmlFor="charname">Character Name</label>
+                    <input name="charname" placeholder="Kairus Stronghold" />
                 </section>
                 <section className={styles.misc}>
                     <ul>
@@ -117,27 +119,33 @@ export default function CustomisableCharacterSheet() {
                             <div className={`${styles.saves} ${styles.listSection} ${styles.box}`}>
                                 <ul>
                                     <li>
-                                        <label htmlFor="Strength-save">Strength</label><input name="Strength-save" placeholder="+0" type="text" />
+                                        <label htmlFor="Strength-save">Strength</label>
+                                        <input name="Strength-save" placeholder="+0" type="text" />
                                         <input name="Strength-save-prof" type="checkbox" />
                                     </li>
                                     <li>
-                                        <label htmlFor="Dexterity-save">Dexterity</label><input name="Dexterity-save" placeholder="+0" type="text" />
+                                        <label htmlFor="Dexterity-save">Dexterity</label>
+                                        <input name="Dexterity-save" placeholder="+0" type="text" />
                                         <input name="Dexterity-save-prof" type="checkbox" />
                                     </li>
                                     <li>
-                                        <label htmlFor="Constitution-save">Constitution</label><input name="Constitution-save" placeholder="+0" type="text" />
+                                        <label htmlFor="Constitution-save">Constitution</label>
+                                        <input name="Constitution-save" placeholder="+0" type="text" />
                                         <input name="Constitution-save-prof" type="checkbox" />
                                     </li>
                                     <li>
-                                        <label htmlFor="Wisdom-save">Wisdom</label><input name="Wisdom-save" placeholder="+0" type="text" />
+                                        <label htmlFor="Wisdom-save">Wisdom</label>
+                                        <input name="Wisdom-save" placeholder="+0" type="text" />
                                         <input name="Wisdom-save-prof" type="checkbox" />
                                     </li>
                                     <li>
-                                        <label htmlFor="Intelligence-save">Intelligence</label><input name="Intelligence-save" placeholder="+0" type="text" />
+                                        <label htmlFor="Intelligence-save">Intelligence</label>
+                                        <input name="Intelligence-save" placeholder="+0" type="text" />
                                         <input name="Intelligence-save-prof" type="checkbox" />
                                     </li>
                                     <li>
-                                        <label htmlFor="Charisma-save">Charisma</label><input name="Charisma-save" placeholder="+0" type="text" />
+                                        <label htmlFor="Charisma-save">Charisma</label>
+                                        <input name="Charisma-save" placeholder="+0" type="text" />
                                         <input name="Charisma-save-prof" type="checkbox" />
                                     </li>
                                 </ul>
@@ -233,7 +241,7 @@ export default function CustomisableCharacterSheet() {
                         <input name="passiveperception" placeholder="10" />
                     </div>
                     <div className={`${styles.otherprofs} ${styles.box} ${styles.textblock}`}>
-                        <label htmlFor="otherprofs">Other Proficiencies and Languages</label><textarea name="otherprofs"></textarea>
+                        <label htmlFor="otherprofs">Other Proficiencies and Languages</label><textarea className={styles.textarea} name="otherprofs"></textarea>
                     </div>
                 </section>
                 <section>
@@ -363,7 +371,7 @@ export default function CustomisableCharacterSheet() {
                                     </tr>
                                 </tbody>
                             </table>
-                            <textarea></textarea>
+                            <textarea className={styles.textarea}></textarea>
                         </div>
                     </section>
                     <section className={styles.equipment}>
@@ -372,44 +380,54 @@ export default function CustomisableCharacterSheet() {
                             <div className={styles.money}>
                                 <ul>
                                     <li>
-                                        <label htmlFor="cp">cp</label><input name="cp" />
+                                        <label htmlFor="cp">cp</label>
+                                        <input name="cp" />
                                     </li>
                                     <li>
-                                        <label htmlFor="sp">sp</label><input name="sp" />
+                                        <label htmlFor="sp">sp</label>
+                                        <input name="sp" />
                                     </li>
                                     <li>
-                                        <label htmlFor="ep">ep</label><input name="ep" />
+                                        <label htmlFor="ep">ep</label>
+                                        <input name="ep" />
                                     </li>
                                     <li>
-                                        <label htmlFor="gp">gp</label><input name="gp" />
+                                        <label htmlFor="gp">gp</label>
+                                        <input name="gp" />
                                     </li>
                                     <li>
-                                        <label htmlFor="pp">pp</label><input name="pp" />
+                                        <label htmlFor="pp">pp</label>
+                                        <input name="pp" />
                                     </li>
                                 </ul>
                             </div>
-                            <textarea placeholder="Equipment list here"></textarea>
+                            <textarea className={styles.textarea} placeholder="Equipment list here"></textarea>
                         </div>
                     </section>
                 </section>
                 <section>
                     <section className={styles.flavor}>
                         <div className={styles.personality}>
-                            <label htmlFor="personality">Personality</label><textarea name="personality"></textarea>
+                            <label htmlFor="personality">Personality</label>
+                            <textarea className={styles.textarea} name="personality"></textarea>
                         </div>
                         <div className={styles.ideals}>
-                            <label htmlFor={styles.ideals}>Ideals</label><textarea name="ideals"></textarea>
+                            <label htmlFor={styles.ideals}>Ideals</label>
+                            <textarea className={styles.textarea} name="ideals"></textarea>
                         </div>
                         <div className={styles.bonds}>
-                            <label htmlFor="bonds">Bonds</label><textarea name="bonds"></textarea>
+                            <label htmlFor="bonds">Bonds</label>
+                            <textarea className={styles.textarea} name="bonds"></textarea>
                         </div>
                         <div className={styles.flaws}>
-                            <label htmlFor="flaws">Flaws</label><textarea name="flaws"></textarea>
+                            <label htmlFor="flaws">Flaws</label>
+                            <textarea className={styles.textarea} name="flaws"></textarea>
                         </div>
                     </section>
                     <section className={styles.features}>
                         <div>
-                            <label htmlFor={styles.features}>Features & Traits</label><textarea name="features"></textarea>
+                            <label htmlFor={styles.features}>Features & Traits</label>
+                            <textarea className={styles.textarea} name="features"></textarea>
                         </div>
                     </section>
                 </section>

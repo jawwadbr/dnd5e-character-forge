@@ -104,6 +104,11 @@ input[type=checkbox] {
   cursor: pointer;
 }
 
+input[type=text] {
+  border: 0;
+  outline: none;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
