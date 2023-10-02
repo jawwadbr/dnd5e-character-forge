@@ -1,6 +1,5 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,29 +22,21 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "skill")
-public class Skill {
+@Table(name = "race_ability_score_bonus")
+public class RaceAbilityScoreBonus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
-    @Column(name = "index_name", nullable = false)
-    private String indexName;
+    @ManyToOne
+    @JoinColumn(name = "race_id", nullable = false)
+    private Race race;
 
-    @Column(name = "skill_name", nullable = false)
-    private String name;
-
-    @Column(name = "skill_desc", columnDefinition = "TEXT", nullable = false)
-    private String skillDesc;
-
-    @Column(name = "url", nullable = false)
-    private String url;
-
-    // Many Skills can belong to One AbilityScore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
-    @JoinColumn(name = "ability_score_id_fk")
+    @ManyToOne
+    @JoinColumn(name = "ability_score_id", nullable = false)
     private AbilityScore abilityScore;
 
+    @Column(name = "bonus", nullable = false)
+    private int bonus;
 }

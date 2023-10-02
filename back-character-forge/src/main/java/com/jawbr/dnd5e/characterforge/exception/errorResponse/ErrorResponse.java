@@ -14,10 +14,10 @@ public class ErrorResponse {
     private String message;
     private String timeStamp;
 
-    public ErrorResponse(int status, String message, long timeStamp) {
+    public ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
-        this.timeStamp = formatTimestamp(timeStamp);
+        this.timeStamp = formatTimestamp(System.currentTimeMillis());
     }
 
     private String formatTimestamp(long timeStamp) {

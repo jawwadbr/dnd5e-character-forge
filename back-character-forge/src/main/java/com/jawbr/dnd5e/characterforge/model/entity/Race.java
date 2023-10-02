@@ -65,12 +65,14 @@ public class Race {
     @Column(name = "url", nullable = false)
     private String url;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "race_ability_scores",
-            joinColumns = @JoinColumn(name = "race_id_fk"),
-            inverseJoinColumns = @JoinColumn(name = "ability_score_id_fk")
-    )
-    private List<AbilityScore> abilityBonuses;
+    @ManyToMany(mappedBy = "race", cascade = CascadeType.ALL)
+    private List<RaceAbilityScoreBonus> abilityBonuses;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinTable(
+            name = "race_languages", // Provide a custom join table name
+            joinColumns = @JoinColumn(name = "race_id"),
+            inverseJoinColumns = @JoinColumn(name = "language_id")
+    )
+    private List<Language> languages;
 }

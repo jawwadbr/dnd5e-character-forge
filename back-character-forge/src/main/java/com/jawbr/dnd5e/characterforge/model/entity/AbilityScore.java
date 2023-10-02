@@ -1,6 +1,5 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,6 +46,6 @@ public class AbilityScore {
     private String url;
 
     // AbilityScore can have multiples Skills
-    @OneToMany(mappedBy = "abilityScore", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "abilityScore")
     private List<Skill> skills;
 }

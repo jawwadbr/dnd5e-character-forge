@@ -19,7 +19,7 @@ public class AbilityScoreController {
     }
 
     @GetMapping
-    public List<AbilityScoreDTO> findAllAbility() {
+    public List<AbilityScoreDTO> findAllAbilityScores() {
         return abilityScoreService.findAllAbilityScores();
     }
 }

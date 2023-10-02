@@ -12,7 +12,7 @@ public class AbilityScoreExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleException(AbilityScoreNotFoundException exc) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage(), System.currentTimeMillis());
+        ErrorResponse error = new ErrorResponse(HttpStatus.NOT_FOUND.value(), exc.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

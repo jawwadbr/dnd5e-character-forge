@@ -1,13 +1,15 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
+import com.jawbr.dnd5e.characterforge.model.util.LanguageType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,6 +18,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,29 +27,34 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "skill")
-public class Skill {
+@Table(name = "language")
+public class Language {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int id;
 
     @Column(name = "index_name", nullable = false)
     private String indexName;
 
-    @Column(name = "skill_name", nullable = false)
+    @Column(name = "language_name", nullable = false)
     private String name;
 
-    @Column(name = "skill_desc", columnDefinition = "TEXT", nullable = false)
-    private String skillDesc;
+    @Column(name = "language_descr")
+    private String language_desc;
 
-    @Column(name = "url", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private LanguageType type;
+
+    // typicalSpeakers
+
+    @Column(nullable = false)
+    private String script;
+
+    @Column(nullable = false)
     private String url;
 
-    // Many Skills can belong to One AbilityScore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
-    @JoinColumn(name = "ability_score_id_fk")
-    private AbilityScore abilityScore;
+    @ManyToMany(mappedBy = "languages", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    private List<Race> races;
 
 }
