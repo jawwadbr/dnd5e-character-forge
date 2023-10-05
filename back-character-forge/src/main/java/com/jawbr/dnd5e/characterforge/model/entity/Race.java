@@ -70,9 +70,18 @@ public class Race {
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
-            name = "race_languages", // Provide a custom join table name
+            name = "race_languages",
             joinColumns = @JoinColumn(name = "race_id"),
             inverseJoinColumns = @JoinColumn(name = "language_id")
     )
     private List<Language> languages;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinTable(
+            name = "race_proficiency",
+            joinColumns = @JoinColumn(name = "race_id"),
+            inverseJoinColumns = @JoinColumn(name = "proficiency_id")
+    )
+    private List<Proficiency> proficiencies;
+
 }

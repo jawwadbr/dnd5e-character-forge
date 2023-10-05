@@ -18,18 +18,15 @@ public record RaceDTO(
         String age,
         Size size,
         String size_description,
+        List<RaceProficiencyDTO> starting_proficiencies,
         /*
-         * TODO -  starting_proficiencies []
          * TODO -  "starting_proficiency_options"
          */
         List<RaceLanguagesDTO> languages,
         // TODO -  "language_options"
-        /*
-         * IDEA - Can languages options be a true/false field and if it's true display all available languages
-         * and only removes from the list languages that the race already knows
-         */
         String language_desc,
         // traits []
+        // subraces when available
         String url
 ) {
 }
