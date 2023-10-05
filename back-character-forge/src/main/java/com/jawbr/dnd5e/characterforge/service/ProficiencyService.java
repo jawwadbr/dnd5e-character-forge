@@ -32,7 +32,7 @@ public class ProficiencyService {
      * Method to find all proficiencies inside the database
      *
      * @return a List containing all proficiencies mapped into ProficiencyDTO
-     * @throws ProficiencyNotFoundException when no languages are found inside the database
+     * @throws ProficiencyNotFoundException when no proficiencies are found inside the database
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public List<ProficiencyDTO> findAllProficiencies() {
