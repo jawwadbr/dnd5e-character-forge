@@ -10,7 +10,7 @@
     margin: 20px 10px;
 }
 
-.charGeneratorContainer form .charField input {
+.charGeneratorContainer form .charField input, .charGeneratorContainer form .charField select {
     outline: none;
     width: 100%;
     padding: 5px;
@@ -19,11 +19,22 @@
     background-color: transparent;
 }
 
+.charGeneratorContainer form .charField select:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
 .charGeneratorContainer form .buttonGenerate {
     width: 100%;
     text-align: center;
 }
 
-.charGeneratorContainer form .buttonGenerate a {
+.charGeneratorContainer form .buttonGenerate button {
     font-size: 20px;
 }
