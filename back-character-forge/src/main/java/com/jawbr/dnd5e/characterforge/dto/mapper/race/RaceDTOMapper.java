@@ -17,12 +17,14 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
 
     private final RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper;
     private final RaceLanguagesDTOMapper raceLanguagesDTOMapper;
+    private final RaceProficiencyDTOMapper raceProficiencyDTOMapper;
 
     public RaceDTOMapper(RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper,
-                         RaceLanguagesDTOMapper raceLanguagesDTOMapper)
+                         RaceLanguagesDTOMapper raceLanguagesDTOMapper, RaceProficiencyDTOMapper raceProficiencyDTOMapper)
     {
         this.raceAbilityBonusesDTOMapper = raceAbilityBonusesDTOMapper;
         this.raceLanguagesDTOMapper = raceLanguagesDTOMapper;
+        this.raceProficiencyDTOMapper = raceProficiencyDTOMapper;
     }
 
     @Override
@@ -39,6 +41,10 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 race.getAge_desc(),
                 race.getSize(),
                 race.getSize_desc(),
+                race.getProficiencies()
+                        .stream()
+                        .map(raceProficiencyDTOMapper)
+                        .collect(Collectors.toList()),
                 race.getLanguages()
                         .stream()
                         .map(raceLanguagesDTOMapper)
