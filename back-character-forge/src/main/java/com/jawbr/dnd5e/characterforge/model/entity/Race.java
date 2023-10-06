@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -83,5 +84,9 @@ public class Race {
             inverseJoinColumns = @JoinColumn(name = "proficiency_id")
     )
     private List<Proficiency> proficiencies;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "subrace_id")
+    private List<SubRace> subRaces;
 
 }

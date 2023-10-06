@@ -3,6 +3,8 @@ package com.jawbr.dnd5e.characterforge.controller;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceAbilityBonusesDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceLanguagesDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.race.RaceProficiencyDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.race.RaceSubRaceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RacialAbilityScoreBonusDTO;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
@@ -44,9 +46,47 @@ class RaceControllerTest {
     private RaceAbilityBonusesDTO raceAbilityBonusesDTO;
     private RacialAbilityScoreBonusDTO racialAbilityScoreBonusDTO;
     private RaceLanguagesDTO raceLanguagesDTO;
+    // ability option
+    private RaceProficiencyDTO raceProficiencyDTO;
+    // starting_proficiency_options
+    // language options
+    // traits
+    private RaceSubRaceDTO subRaceDTO;
 
     @BeforeEach
     public void init() {
+
+
+        // Proficiency
+        raceProficiencyDTO = RaceProficiencyDTO.builder()
+                .index("raceProficiencyDTO index")
+                .name("raceProficiencyDTO name")
+                .url("raceProficiencyDTO url")
+                .build();
+
+        List<RaceProficiencyDTO> raceProficiencyDTOS = new ArrayList<>();
+        raceProficiencyDTOS.add(raceProficiencyDTO);
+
+        // Sub race
+        subRaceDTO = RaceSubRaceDTO.builder()
+                .index("raceSubRaceDTO index")
+                .name("raceSubRaceDTO name")
+                .url("raceSubRaceDTO url")
+                .build();
+
+        List<RaceSubRaceDTO> subRaceDTOS = new ArrayList<>();
+        subRaceDTOS.add(subRaceDTO);
+
+        // language
+        raceLanguagesDTO = RaceLanguagesDTO.builder()
+                .index("raceLanguagesDTO index")
+                .name("raceLanguagesDTO name")
+                .url("raceLanguagesDTO url")
+                .build();
+        List<RaceLanguagesDTO> languageDTOList = new ArrayList<>();
+        languageDTOList.add(raceLanguagesDTO);
+
+        // Ability Score
         racialAbilityScoreBonusDTO = RacialAbilityScoreBonusDTO.builder()
                 .index("RacialAbilityScoreBonusDTO index")
                 .name("RacialAbilityScoreBonusDTO name")
@@ -58,18 +98,10 @@ class RaceControllerTest {
                 .bonus(1)
                 .build();
 
-        raceLanguagesDTO = RaceLanguagesDTO.builder()
-                .index("raceLanguagesDTO index")
-                .name("raceLanguagesDTO name")
-                .url("raceLanguagesDTO url")
-                .build();
-
         List<RaceAbilityBonusesDTO> raceAbilityBonusesDTOS = new ArrayList<>();
         raceAbilityBonusesDTOS.add(raceAbilityBonusesDTO);
 
-        List<RaceLanguagesDTO> languageDTOList = new ArrayList<>();
-        languageDTOList.add(raceLanguagesDTO);
-
+        //
         raceDTO = RaceDTO.builder()
                 .index("raceDTO index")
                 .name("raceDTO name")
@@ -79,8 +111,10 @@ class RaceControllerTest {
                 .age("raceDTO age")
                 .size(Size.Medium)
                 .size_description("raceDTO size description")
+                .starting_proficiencies(raceProficiencyDTOS)
                 .languages(languageDTOList)
                 .language_desc("raceDTO lang desc")
+                .subraces(subRaceDTOS)
                 .url("raceDTO url")
                 .build();
     }
@@ -115,6 +149,18 @@ class RaceControllerTest {
                 .andExpect(jsonPath("$[0].languages[0].name", is(raceLanguagesDTO.name())))
                 .andExpect(jsonPath("$[0].languages[0].url", is(raceLanguagesDTO.url())))
                 .andExpect(jsonPath("$[0].language_desc", is(raceDTO.language_desc())))
+                .andExpect(jsonPath("$[0].starting_proficiencies[0].index",
+                        is(raceProficiencyDTO.index())))
+                .andExpect(jsonPath("$[0].starting_proficiencies[0].name",
+                        is(raceProficiencyDTO.name())))
+                .andExpect(jsonPath("$[0].starting_proficiencies[0].url",
+                        is(raceProficiencyDTO.url())))
+                .andExpect(jsonPath("$[0].subraces[0].index",
+                        is(subRaceDTO.index())))
+                .andExpect(jsonPath("$[0].subraces[0].name",
+                        is(subRaceDTO.name())))
+                .andExpect(jsonPath("$[0].subraces[0].url",
+                        is(subRaceDTO.url())))
                 .andExpect(jsonPath("$[0].url", is(raceDTO.url())))
                 .andDo(MockMvcResultHandlers.print());
 

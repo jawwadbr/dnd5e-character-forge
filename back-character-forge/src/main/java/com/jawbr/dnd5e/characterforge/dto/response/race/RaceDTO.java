@@ -26,7 +26,7 @@ public record RaceDTO(
         // TODO -  "language_options"
         String language_desc,
         // traits []
-        // subraces when available
+        List<RaceSubRaceDTO> subraces,
         String url
 ) {
 }
