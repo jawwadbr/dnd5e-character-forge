@@ -4,7 +4,6 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.race.RaceDTOMapper;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import com.jawbr.dnd5e.characterforge.repository.RaceRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
