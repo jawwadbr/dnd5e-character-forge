@@ -1,11 +1,15 @@
 package com.jawbr.dnd5e.characterforge.service;
 
 import com.jawbr.dnd5e.characterforge.dto.mapper.subRace.SubRaceDTOMapper;
+import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceAbilityScoreBonusDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceAbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceRacialDTO;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
+import com.jawbr.dnd5e.characterforge.model.entity.SubRaceAbilityScoreBonus;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import com.jawbr.dnd5e.characterforge.repository.SubRaceRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,12 +41,10 @@ class SubRaceServiceTest {
 
     private SubRace subRace;
     private SubRaceDTO subRaceDTO;
-    private SubRaceRacialDTO subRaceRacialDTO;
-    private Race race;
 
     @BeforeEach
     void init() {
-        race = Race.builder()
+        Race race = Race.builder()
                 .indexName("elf")
                 .raceName("Elf")
                 .speed(30)
@@ -70,9 +72,21 @@ class SubRaceServiceTest {
                         "friendly, and often encountered among humans and other races.")
                 .url("/api/subraces/high-elf")
                 .race(race)
+                .abilityBonuses(Collections.singletonList(SubRaceAbilityScoreBonus.builder()
+                        .abilityScore(AbilityScore.builder()
+                                .id(1)
+                                .indexName("indexA")
+                                .shortName("shortNameA")
+                                .fullName("fullNameA")
+                                .desc("descA")
+                                .url("urlA")
+                                .build())
+                        .subRace(subRace)
+                        .bonus(2)
+                        .build()))
                 .build();
 
-        subRaceRacialDTO = SubRaceRacialDTO.builder()
+        SubRaceRacialDTO subRaceRacialDTO = SubRaceRacialDTO.builder()
                 .index("elf")
                 .name("Elf")
                 .url("/api/races/elf")
@@ -88,6 +102,14 @@ class SubRaceServiceTest {
                         "friendly, and often encountered among humans and other races.")
                 .url("/api/subraces/high-elf")
                 .race(subRaceRacialDTO)
+                .ability_bonuses(Collections.singletonList(SubRaceAbilityScoreBonusDTO.builder()
+                        .ability_score(SubRaceAbilityScoreDTO.builder()
+                                .index("indexA")
+                                .name("shortNameA")
+                                .url("urlA")
+                                .build())
+                        .bonus(2)
+                        .build()))
                 .build();
     }
 

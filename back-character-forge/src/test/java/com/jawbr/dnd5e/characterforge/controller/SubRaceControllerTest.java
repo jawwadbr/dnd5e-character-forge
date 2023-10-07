@@ -1,11 +1,12 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceAbilityScoreBonusDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceAbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceRacialDTO;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
-import com.jawbr.dnd5e.characterforge.model.entity.Race;
-import com.jawbr.dnd5e.characterforge.model.util.Size;
 import com.jawbr.dnd5e.characterforge.service.SubRaceService;
+import org.hamcrest.core.Is;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,21 @@ class SubRaceControllerTest {
 
     private SubRaceDTO subRaceDTO;
     private SubRaceRacialDTO subRaceRacialDTO;
+    private SubRaceAbilityScoreBonusDTO subRaceAbilityScoreBonusDTO;
 
     @BeforeEach
     void init() {
+
+        SubRaceAbilityScoreDTO subRaceAbilityScoreDTO = SubRaceAbilityScoreDTO.builder()
+                .name("dex")
+                .index("dex")
+                .url("url score")
+                .build();
+
+        subRaceAbilityScoreBonusDTO = SubRaceAbilityScoreBonusDTO.builder()
+                .ability_score(subRaceAbilityScoreDTO)
+                .bonus(2)
+                .build();
 
         subRaceRacialDTO = SubRaceRacialDTO.builder()
                 .index("elf")
@@ -60,6 +73,7 @@ class SubRaceControllerTest {
                         "friendly, and often encountered among humans and other races.")
                 .url("/api/subraces/high-elf")
                 .race(subRaceRacialDTO)
+                .ability_bonuses(Collections.singletonList(subRaceAbilityScoreBonusDTO))
                 .build();
     }
 
@@ -80,6 +94,14 @@ class SubRaceControllerTest {
                 .andExpect(jsonPath("$[0].race.index", is(subRaceRacialDTO.index())))
                 .andExpect(jsonPath("$[0].race.name", is(subRaceRacialDTO.name())))
                 .andExpect(jsonPath("$[0].race.url", is(subRaceRacialDTO.url())))
+                .andExpect(jsonPath("$[0].ability_bonuses[0].ability_score.index",
+                        Is.is(subRaceAbilityScoreBonusDTO.ability_score().index())))
+                .andExpect(jsonPath("$[0].ability_bonuses[0].ability_score.name",
+                        Is.is(subRaceAbilityScoreBonusDTO.ability_score().name())))
+                .andExpect(jsonPath("$[0].ability_bonuses[0].ability_score.url",
+                        Is.is(subRaceAbilityScoreBonusDTO.ability_score().url())))
+                .andExpect(jsonPath("$[0].ability_bonuses[0].bonus",
+                        Is.is(subRaceAbilityScoreBonusDTO.bonus())))
                 .andDo(MockMvcResultHandlers.print());
     }
 

@@ -5,6 +5,7 @@ import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Method to map {@link SubRace} entity to {@link SubRaceDTO}
@@ -15,9 +16,11 @@ import java.util.function.Function;
 public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
 
     private final SubRaceRacialDTOMapper subRaceRacialDTOMapper;
+    private final SubRaceAbilityScoreBonusDTOMapper subRaceAbilityScoreBonusDTOMapper;
 
-    public SubRaceDTOMapper(SubRaceRacialDTOMapper subRaceRacialDTOMapper) {
+    public SubRaceDTOMapper(SubRaceRacialDTOMapper subRaceRacialDTOMapper, SubRaceAbilityScoreBonusDTOMapper subRaceAbilityScoreBonusDTOMapper) {
         this.subRaceRacialDTOMapper = subRaceRacialDTOMapper;
+        this.subRaceAbilityScoreBonusDTOMapper = subRaceAbilityScoreBonusDTOMapper;
     }
 
     @Override
@@ -27,7 +30,10 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                 subRace.getSubRaceName(),
                 subRaceRacialDTOMapper.apply(subRace.getRace()),
                 subRace.getDesc(),
-                //ability bonuses
+                subRace.getAbilityBonuses()
+                        .stream()
+                        .map(subRaceAbilityScoreBonusDTOMapper)
+                        .collect(Collectors.toList()),
                 //starting_proficiencies
                 //languages
                 //language_options

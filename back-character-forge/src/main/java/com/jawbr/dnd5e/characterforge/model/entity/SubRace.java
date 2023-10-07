@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,6 +46,9 @@ public class SubRace {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     private Race race;
+
+    @ManyToMany(mappedBy = "subRace", cascade = CascadeType.ALL)
+    private List<SubRaceAbilityScoreBonus> abilityBonuses;
 
     // starting proficiencies
     // Languages

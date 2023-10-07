@@ -1,16 +1,16 @@
 package com.jawbr.dnd5e.characterforge.dto.response.subRace;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+import java.util.List;
+
 @Builder
 public record SubRaceDTO(
         String index,
         String name,
         SubRaceRacialDTO race,
         String desc,
-        //ability bonuses
+        List<SubRaceAbilityScoreBonusDTO> ability_bonuses,
         //starting_proficiencies
         //languages
         //language_options
