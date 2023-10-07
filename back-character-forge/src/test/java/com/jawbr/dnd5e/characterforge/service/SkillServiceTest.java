@@ -35,7 +35,6 @@ class SkillServiceTest {
 
     private Skill skill;
     private SkillDTO skillDTO;
-    private AbilityScore abilityScore;
 
     @BeforeEach
     void init() {
@@ -50,7 +49,7 @@ class SkillServiceTest {
         List<Skill> skillList = new ArrayList<>();
         skillList.add(skill);
 
-        abilityScore = AbilityScore.builder()
+        AbilityScore abilityScore = AbilityScore.builder()
                 .id(1)
                 .indexName("indexA")
                 .shortName("shortNameA")

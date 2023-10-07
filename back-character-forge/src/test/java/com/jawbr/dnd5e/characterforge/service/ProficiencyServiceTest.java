@@ -38,12 +38,10 @@ class ProficiencyServiceTest {
 
     private Proficiency proficiency;
     private ProficiencyDTO proficiencyDTO;
-    private ProficiencyRaceDTO proficiencyRaceDTO;
-    private Race race;
 
     @BeforeEach
     void init() {
-        race = Race.builder()
+        Race race = Race.builder()
                 .indexName("elf")
                 .raceName("Elf")
                 .speed(30)
@@ -71,7 +69,7 @@ class ProficiencyServiceTest {
                 .races(raceList)
                 .build();
 
-        proficiencyRaceDTO = ProficiencyRaceDTO.builder()
+        ProficiencyRaceDTO proficiencyRaceDTO = ProficiencyRaceDTO.builder()
                 .index("elf")
                 .name("Elf")
                 .url("/api/races/elf")

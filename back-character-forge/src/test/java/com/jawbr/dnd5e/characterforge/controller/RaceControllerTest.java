@@ -44,7 +44,6 @@ class RaceControllerTest {
 
     private RaceDTO raceDTO;
     private RaceAbilityBonusesDTO raceAbilityBonusesDTO;
-    private RacialAbilityScoreBonusDTO racialAbilityScoreBonusDTO;
     private RaceLanguagesDTO raceLanguagesDTO;
     // ability option
     private RaceProficiencyDTO raceProficiencyDTO;
@@ -87,7 +86,7 @@ class RaceControllerTest {
         languageDTOList.add(raceLanguagesDTO);
 
         // Ability Score
-        racialAbilityScoreBonusDTO = RacialAbilityScoreBonusDTO.builder()
+        RacialAbilityScoreBonusDTO racialAbilityScoreBonusDTO = RacialAbilityScoreBonusDTO.builder()
                 .index("RacialAbilityScoreBonusDTO index")
                 .name("RacialAbilityScoreBonusDTO name")
                 .url("RacialAbilityScoreBonusDTO url")
