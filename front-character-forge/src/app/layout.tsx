@@ -1,8 +1,14 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Overpass } from 'next/font/google'
+import styles from './page.module.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const overpass = Overpass({
+  weight: ['100', '300', '500', '700', '800'],
+  style: ['normal'],
+  subsets: ['latin'],
+  display: 'swap'
+})
 
 export const metadata: Metadata = {
   title: 'Character Forge',
@@ -16,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={overpass.className}>
+        <main className={styles.main}>
+          {children}
+        </main>
+      </body>
     </html>
   )
 }
