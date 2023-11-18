@@ -54,5 +54,9 @@ public class Proficiency {
     @ManyToMany(mappedBy = "proficiencies", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     private List<Race> races;
 
+    // subRaces that this proficiency is part
+    @ManyToMany(mappedBy = "proficiencies", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    private List<SubRace> subRaces;
+
     // reference that this proficiency is part
 }

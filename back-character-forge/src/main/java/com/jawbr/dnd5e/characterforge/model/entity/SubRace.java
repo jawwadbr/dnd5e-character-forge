@@ -1,11 +1,14 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
+import com.jawbr.dnd5e.characterforge.model.util.RaceEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -26,7 +29,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "sub_race")
-public class SubRace {
+public class SubRace implements RaceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +54,20 @@ public class SubRace {
     private List<SubRaceAbilityScoreBonus> abilityBonuses;
 
     // starting proficiencies
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinTable(
+            name = "sub-race_proficiency",
+            joinColumns = @JoinColumn(name = "sub-race_id"),
+            inverseJoinColumns = @JoinColumn(name = "proficiency_id")
+    )
+    private List<Proficiency> proficiencies;
+
     // Languages
     // languages options
     // racial traits
+
+    @Override
+    public String getEntityName() {
+        return getSubRaceName();
+    }
 }

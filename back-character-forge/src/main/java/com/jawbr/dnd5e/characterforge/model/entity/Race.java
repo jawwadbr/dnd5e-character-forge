@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
+import com.jawbr.dnd5e.characterforge.model.util.RaceEntity;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -31,7 +32,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "race")
-public class Race {
+public class Race implements RaceEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,4 +90,8 @@ public class Race {
     @JoinColumn(name = "subrace_id")
     private List<SubRace> subRaces;
 
+    @Override
+    public String getEntityName() {
+        return getRaceName();
+    }
 }
