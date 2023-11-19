@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
 import com.jawbr.dnd5e.characterforge.service.SubRaceService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ public class SubRaceController {
     }
 
     @GetMapping
-    public List<SubRaceDTO> findAllSubRaces() {
+    public FindAllDTOResponse findAllSubRaces() {
         return subRaceService.findAllSubRaces();
     }
 }

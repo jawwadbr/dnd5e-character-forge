@@ -1,12 +1,10 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
-import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.service.AbilityScoreService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/ability-scores")
@@ -19,7 +17,7 @@ public class AbilityScoreController {
     }
 
     @GetMapping
-    public List<AbilityScoreDTO> findAllAbilityScores() {
+    public FindAllDTOResponse findAllAbilityScores() {
         return abilityScoreService.findAllAbilityScores();
     }
 }

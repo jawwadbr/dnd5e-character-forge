@@ -3,7 +3,7 @@ package com.jawbr.dnd5e.characterforge.service;
 import com.github.slugify.Slugify;
 import com.jawbr.dnd5e.characterforge.dto.mapper.race.RaceDTOMapper;
 import com.jawbr.dnd5e.characterforge.dto.mapper.race.RaceDTOResponseMapper;
-import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTOResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
 import com.jawbr.dnd5e.characterforge.repository.RaceRepository;
 import org.springframework.stereotype.Service;
@@ -53,7 +53,7 @@ public class RaceService {
      * @throws RaceNotFoundException when no races are found inside the database
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
-    public RaceDTOResponse findAllRaces() {
+    public FindAllDTOResponse findAllRaces() {
         return Optional.of(raceRepository.findAll())
                 .filter(list -> !list.isEmpty())
                 .map(raceDTOResponseMapper)
