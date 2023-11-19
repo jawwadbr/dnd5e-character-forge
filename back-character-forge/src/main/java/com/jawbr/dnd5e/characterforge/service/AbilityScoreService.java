@@ -4,6 +4,7 @@ import com.github.slugify.Slugify;
 import com.jawbr.dnd5e.characterforge.dto.mapper.abilityScore.AbilityScoreDTOMapper;
 import com.jawbr.dnd5e.characterforge.dto.mapper.abilityScore.AbilityScoreDTOResponseMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
 import com.jawbr.dnd5e.characterforge.repository.AbilityScoreRepository;
 import org.springframework.stereotype.Service;
@@ -32,20 +33,6 @@ public class AbilityScoreService {
         this.slugify = Slugify.builder().build();
     }
 
-//    /**
-//     * Method to find all Ability Scores inside the database
-//     *
-//     * @return a List containing all Ability Scores mapped into AbilityScoreDTO
-//     * @throws AbilityScoreNotFoundException when no ability score is found inside the database
-//     * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
-//     */
-//    public List<AbilityScoreDTO> findAllAbilityScores() {
-//        return Optional.of(abilityScoreRepository.findAll())
-//                .filter(list -> !list.isEmpty())
-//                .map(list -> list.stream().map(abilityScoreDTOMapper).toList())
-//                .orElseThrow(() -> new AbilityScoreNotFoundException("No ability scores found."));
-//    }
-
     /**
      * Method to find all Ability Scores inside the database
      *
@@ -58,5 +45,19 @@ public class AbilityScoreService {
                 .filter(list -> !list.isEmpty())
                 .map(abilityScoreDTOResponseMapper)
                 .orElseThrow(() -> new AbilityScoreNotFoundException("No ability scores found."));
+    }
+
+    /**
+     * Method to find Ability Scores inside the database using Index Name
+     *
+     * @return a Ability Scores mapped into AbilityScoreDTO
+     * @throws AbilityScoreNotFoundException when no ability score is found inside the database
+     * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+     */
+    public AbilityScoreDTO findAbilityScoresByIndexName(String indexName) {
+        return Optional.of(abilityScoreRepository.findByIndexName(indexName))
+                .map(abilityScoreDTOMapper)
+                .orElseThrow(() -> new AbilityScoreNotFoundException(
+                        String.format("Ability score with index name '%s' not found.", indexName)));
     }
 }

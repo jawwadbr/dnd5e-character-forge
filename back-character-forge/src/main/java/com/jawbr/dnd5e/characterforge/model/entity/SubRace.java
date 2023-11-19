@@ -35,7 +35,7 @@ public class SubRace implements RaceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "index_name", nullable = false)
+    @Column(name = "index_name", nullable = false, unique = true, length = 128)
     private String indexName;
 
     @Column(name = "sub_race_name", nullable = false)
@@ -44,7 +44,7 @@ public class SubRace implements RaceEntity {
     @Column(name = "sub_race_descr", columnDefinition = "TEXT", nullable = false)
     private String desc;
 
-    @Column(name = "url", nullable = false)
+    @Column(name = "url", nullable = false, unique = true, length = 128)
     private String url;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})

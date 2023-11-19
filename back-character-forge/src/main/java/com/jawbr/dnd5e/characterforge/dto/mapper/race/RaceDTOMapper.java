@@ -1,9 +1,15 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.race;
 
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
+import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
+import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -16,21 +22,41 @@ import java.util.stream.Collectors;
 public class RaceDTOMapper implements Function<Race, RaceDTO> {
 
     private final RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper;
-    private final RaceLanguagesDTOMapper raceLanguagesDTOMapper;
-    private final RaceProficiencyDTOMapper raceProficiencyDTOMapper;
-    private final RaceSubRaceDTOMapper subRaceDTOMapper;
 
-    public RaceDTOMapper(RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper,
-                         RaceLanguagesDTOMapper raceLanguagesDTOMapper, RaceProficiencyDTOMapper raceProficiencyDTOMapper, RaceSubRaceDTOMapper subRaceDTOMapper)
-    {
+    public RaceDTOMapper(RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper) {
         this.raceAbilityBonusesDTOMapper = raceAbilityBonusesDTOMapper;
-        this.raceLanguagesDTOMapper = raceLanguagesDTOMapper;
-        this.raceProficiencyDTOMapper = raceProficiencyDTOMapper;
-        this.subRaceDTOMapper = subRaceDTOMapper;
     }
 
     @Override
     public RaceDTO apply(Race race) {
+
+        List<EntityReferenceDTO> proficienciesList = new ArrayList<>();
+        for(Proficiency proficiency : race.getProficiencies()) {
+            proficienciesList.add(EntityReferenceDTO.builder()
+                    .name(proficiency.getName())
+                    .index(proficiency.getIndexName())
+                    .url(proficiency.getUrl())
+                    .build());
+        }
+
+        List<EntityReferenceDTO> languagesList = new ArrayList<>();
+        for(Language language : race.getLanguages()) {
+            languagesList.add(EntityReferenceDTO.builder()
+                    .name(language.getName())
+                    .index(language.getIndexName())
+                    .url(language.getUrl())
+                    .build());
+        }
+
+        List<EntityReferenceDTO> subRacesList = new ArrayList<>();
+        for(SubRace subRace : race.getSubRaces()) {
+            subRacesList.add(EntityReferenceDTO.builder()
+                    .name(subRace.getSubRaceName())
+                    .index(subRace.getIndexName())
+                    .url(subRace.getUrl())
+                    .build());
+        }
+
         return new RaceDTO(
                 race.getIndexName(),
                 race.getRaceName(),
@@ -43,19 +69,10 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 race.getAge_desc(),
                 race.getSize(),
                 race.getSize_desc(),
-                race.getProficiencies()
-                        .stream()
-                        .map(raceProficiencyDTOMapper)
-                        .collect(Collectors.toList()),
-                race.getLanguages()
-                        .stream()
-                        .map(raceLanguagesDTOMapper)
-                        .collect(Collectors.toList()),
+                proficienciesList,
+                languagesList,
                 race.getLanguage_desc(),
-                race.getSubRaces()
-                        .stream()
-                        .map(subRaceDTOMapper)
-                        .collect(Collectors.toList()),
+                subRacesList,
                 race.getUrl()
         );
     }

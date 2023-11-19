@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.response.subRace;
 
-import com.jawbr.dnd5e.characterforge.dto.response.race.RaceProficiencyDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import lombok.Builder;
 
 import java.util.List;
@@ -9,11 +9,10 @@ import java.util.List;
 public record SubRaceDTO(
         String index,
         String name,
-        SubRaceRacialDTO race,
+        EntityReferenceDTO race,
         String desc,
         List<SubRaceAbilityScoreBonusDTO> ability_bonuses,
-        //starting_proficiencies
-        List<RaceProficiencyDTO> starting_proficiencies,
+        List<EntityReferenceDTO> starting_proficiencies,
         //languages
         //language_options
         //racial_traits

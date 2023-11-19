@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.subRace;
 
-import com.jawbr.dnd5e.characterforge.dto.response.DTOResultListResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.ResultListDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ public class SubRaceDTOResponseMapper implements Function<List<SubRace>, FindAll
     @Override
     public FindAllDTOResponse apply(List<SubRace> subRaces) {
 
-        List<DTOResultListResponse> list = new ArrayList<>();
+        List<ResultListDTOResponse> list = new ArrayList<>();
         for(SubRace subRace : subRaces) {
-            list.add(DTOResultListResponse.builder()
+            list.add(ResultListDTOResponse.builder()
                     .name(subRace.getSubRaceName())
                     .index(subRace.getIndexName())
                     .url(subRace.getUrl())

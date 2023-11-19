@@ -1,7 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
 import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyDTO;
-import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyRaceDTO;
 import com.jawbr.dnd5e.characterforge.exception.ProficiencyNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.util.ProficiencyType;
 import com.jawbr.dnd5e.characterforge.service.ProficiencyService;

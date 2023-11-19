@@ -34,7 +34,7 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "index_name", nullable = false)
+    @Column(name = "index_name", nullable = false, unique = true, length = 128)
     private String indexName;
 
     @Column(name = "language_name", nullable = false)
@@ -51,7 +51,7 @@ public class Language {
     @Column(nullable = false)
     private String script;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true, length = 128)
     private String url;
 
     @ManyToMany(mappedBy = "languages", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})

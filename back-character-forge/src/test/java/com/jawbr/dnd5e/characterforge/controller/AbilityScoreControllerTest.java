@@ -1,7 +1,7 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
-import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreSkillDTO;
 import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
 import com.jawbr.dnd5e.characterforge.service.AbilityScoreService;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,18 +39,18 @@ class AbilityScoreControllerTest {
 
     private final String PATH = "/api/ability-scores";
 
-    private AbilityScoreSkillDTO abilityScoreSkillDTO;
+    private EntityReferenceDTO abilityScoreSkillDTO;
     private AbilityScoreDTO abilityScoreDTO;
 
     @BeforeEach
     public void init() {
-        abilityScoreSkillDTO = AbilityScoreSkillDTO.builder()
+        abilityScoreSkillDTO = EntityReferenceDTO.builder()
                 .index("skill-index")
                 .name("Skill Index")
                 .url("/api/skills/skill-index")
                 .build();
 
-        List<AbilityScoreSkillDTO> abilityScoreSkillDTOS = new ArrayList<>();
+        List<EntityReferenceDTO> abilityScoreSkillDTOS = new ArrayList<>();
         abilityScoreSkillDTOS.add(abilityScoreSkillDTO);
 
         abilityScoreDTO = AbilityScoreDTO.builder()

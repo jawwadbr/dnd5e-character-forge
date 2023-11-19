@@ -30,7 +30,7 @@ public class AbilityScore {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "index_name", nullable = false)
+    @Column(name = "index_name", nullable = false, unique = true, length = 128)
     private String indexName;
 
     @Column(name = "short_name", nullable = false)
@@ -42,7 +42,7 @@ public class AbilityScore {
     @Column(name = "ability_desc", columnDefinition = "TEXT", nullable = false)
     private String desc;
 
-    @Column(name = "url", nullable = false)
+    @Column(name = "url", nullable = false, unique = true, length = 128)
     private String url;
 
     // AbilityScore can have multiples Skills

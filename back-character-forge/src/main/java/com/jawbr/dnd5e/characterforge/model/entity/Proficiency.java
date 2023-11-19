@@ -35,7 +35,7 @@ public class Proficiency {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "index_name", nullable = false)
+    @Column(name = "index_name", nullable = false, unique = true, length = 128)
     private String indexName;
 
     @Column(name = "proficiency_name", nullable = false)
@@ -45,7 +45,7 @@ public class Proficiency {
     @Enumerated(EnumType.STRING)
     private ProficiencyType type;
 
-    @Column(name = "url", nullable = false)
+    @Column(name = "url", nullable = false, unique = true, length = 128)
     private String url;
 
     // classes that this proficiency is part

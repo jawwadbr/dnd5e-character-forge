@@ -1,6 +1,5 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
-import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillAbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillDTO;
 import com.jawbr.dnd5e.characterforge.exception.SkillNotFoundException;
 import com.jawbr.dnd5e.characterforge.service.SkillService;

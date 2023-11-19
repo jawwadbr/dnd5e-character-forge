@@ -1,8 +1,8 @@
 package com.jawbr.dnd5e.characterforge.service;
 
 import com.jawbr.dnd5e.characterforge.dto.mapper.proficiency.ProficiencyDTOMapper;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyDTO;
-import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyRaceDTO;
 import com.jawbr.dnd5e.characterforge.exception.ProficiencyNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
@@ -71,13 +71,13 @@ class ProficiencyServiceTest {
                 .races(raceList)
                 .build();
 
-        ProficiencyRaceDTO proficiencyRaceDTO = ProficiencyRaceDTO.builder()
+        EntityReferenceDTO proficiencyRaceDTO = EntityReferenceDTO.builder()
                 .index("elf")
                 .name("Elf")
                 .url("/api/races/elf")
                 .build();
 
-        List<ProficiencyRaceDTO> proficiencyRaceDTOS = new ArrayList<>();
+        List<EntityReferenceDTO> proficiencyRaceDTOS = new ArrayList<>();
         proficiencyRaceDTOS.add(proficiencyRaceDTO);
 
         proficiencyDTO = ProficiencyDTO.builder()

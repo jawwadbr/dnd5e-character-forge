@@ -1,6 +1,7 @@
 package com.jawbr.dnd5e.characterforge.dto.response.proficiency;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.model.util.ProficiencyType;
 import lombok.Builder;
 
@@ -13,7 +14,7 @@ public record ProficiencyDTO(
         ProficiencyType type,
         String name,
         // classes
-        List<ProficiencyRaceDTO> races,
+        List<EntityReferenceDTO> races,
         String url
         // reference
 ) {

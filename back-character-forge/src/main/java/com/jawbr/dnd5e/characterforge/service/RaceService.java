@@ -4,6 +4,7 @@ import com.github.slugify.Slugify;
 import com.jawbr.dnd5e.characterforge.dto.mapper.race.RaceDTOMapper;
 import com.jawbr.dnd5e.characterforge.dto.mapper.race.RaceDTOResponseMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
 import com.jawbr.dnd5e.characterforge.repository.RaceRepository;
 import org.springframework.stereotype.Service;
@@ -32,20 +33,6 @@ public class RaceService {
         this.slugify = Slugify.builder().build();
     }
 
-//    /**
-//     * Method to find all Races inside the database
-//     *
-//     * @return a List containing all Races mapped into RaceDTO
-//     * @throws RaceNotFoundException when no races are found inside the database
-//     * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
-//     */
-//    public List<RaceDTO> findAllRaces() {
-//        return Optional.of(raceRepository.findAll())
-//                .filter(list -> !list.isEmpty())
-//                .map(list -> list.stream().map(raceDTOMapper).toList())
-//                .orElseThrow(() -> new RaceNotFoundException("No races found."));
-//    }
-
     /**
      * Method to find all Races inside the database
      *
@@ -58,5 +45,19 @@ public class RaceService {
                 .filter(list -> !list.isEmpty())
                 .map(raceDTOResponseMapper)
                 .orElseThrow(() -> new RaceNotFoundException("No races found."));
+    }
+
+    /**
+     * Method to find Race inside the database using Index Name
+     *
+     * @return a Race mapped into RaceDTO
+     * @throws RaceNotFoundException when no race is found inside the database
+     * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
+     */
+    public RaceDTO findRaceByIndexName(String indexName) {
+        return Optional.of(raceRepository.findByIndexName(indexName))
+                .map(raceDTOMapper)
+                .orElseThrow(() -> new RaceNotFoundException(
+                        String.format("Race with index name '%s' not found.", indexName)));
     }
 }

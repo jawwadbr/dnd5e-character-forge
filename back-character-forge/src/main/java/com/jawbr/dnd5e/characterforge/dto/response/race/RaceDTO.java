@@ -1,6 +1,7 @@
 package com.jawbr.dnd5e.characterforge.dto.response.race;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import lombok.Builder;
 
@@ -18,15 +19,15 @@ public record RaceDTO(
         String age,
         Size size,
         String size_description,
-        List<RaceProficiencyDTO> starting_proficiencies,
+        List<EntityReferenceDTO> starting_proficiencies,
         /*
          * TODO -  "starting_proficiency_options"
          */
-        List<RaceLanguagesDTO> languages,
+        List<EntityReferenceDTO> languages,
         // TODO -  "language_options"
         String language_desc,
         // traits []
-        List<RaceSubRaceDTO> subraces,
+        List<EntityReferenceDTO> subraces,
         String url
 ) {
 }

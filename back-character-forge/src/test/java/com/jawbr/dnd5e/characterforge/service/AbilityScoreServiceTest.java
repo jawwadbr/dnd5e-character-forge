@@ -2,7 +2,6 @@ package com.jawbr.dnd5e.characterforge.service;
 
 import com.jawbr.dnd5e.characterforge.dto.mapper.abilityScore.AbilityScoreDTOMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
-import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreSkillDTO;
 import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
 import com.jawbr.dnd5e.characterforge.model.entity.Skill;

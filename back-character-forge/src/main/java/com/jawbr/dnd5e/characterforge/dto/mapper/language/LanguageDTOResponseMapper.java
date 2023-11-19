@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.language;
 
-import com.jawbr.dnd5e.characterforge.dto.response.DTOResultListResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.ResultListDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ public class LanguageDTOResponseMapper implements Function<List<Language>, FindA
     @Override
     public FindAllDTOResponse apply(List<Language> languages) {
 
-        List<DTOResultListResponse> list = new ArrayList<>();
+        List<ResultListDTOResponse> list = new ArrayList<>();
         for(Language language : languages) {
-            list.add(DTOResultListResponse.builder()
+            list.add(ResultListDTOResponse.builder()
                     .index(language.getIndexName())
                     .name(language.getName())
                     .url(language.getUrl())

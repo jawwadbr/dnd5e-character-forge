@@ -1,7 +1,7 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.race;
 
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceAbilityBonusesDTO;
-import com.jawbr.dnd5e.characterforge.dto.response.race.RacialAbilityScoreBonusDTO;
 import com.jawbr.dnd5e.characterforge.model.entity.RaceAbilityScoreBonus;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class RaceAbilityBonusesDTOMapper implements Function<RaceAbilityScoreBon
     @Override
     public RaceAbilityBonusesDTO apply(RaceAbilityScoreBonus abilityScore) {
         return new RaceAbilityBonusesDTO(
-                new RacialAbilityScoreBonusDTO(
+                new EntityReferenceDTO(
                         abilityScore.getAbilityScore().getIndexName(),
                         abilityScore.getAbilityScore().getShortName(),
                         abilityScore.getAbilityScore().getUrl()),

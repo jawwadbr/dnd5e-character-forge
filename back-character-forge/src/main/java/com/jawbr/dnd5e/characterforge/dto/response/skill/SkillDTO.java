@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.response.skill;
 
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import lombok.Builder;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public record SkillDTO(
         String index,
         String name,
         String desc,
-        SkillAbilityScoreDTO ability_score,
+        EntityReferenceDTO ability_score,
         String url
 ) {
 }

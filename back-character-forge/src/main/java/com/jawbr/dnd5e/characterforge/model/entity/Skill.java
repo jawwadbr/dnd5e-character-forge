@@ -31,7 +31,7 @@ public class Skill {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "index_name", nullable = false)
+    @Column(name = "index_name", nullable = false, unique = true, length = 128)
     private String indexName;
 
     @Column(name = "skill_name", nullable = false)
@@ -40,7 +40,7 @@ public class Skill {
     @Column(name = "skill_desc", columnDefinition = "TEXT", nullable = false)
     private String skillDesc;
 
-    @Column(name = "url", nullable = false)
+    @Column(name = "url", nullable = false, unique = true, length = 128)
     private String url;
 
     // Many Skills can belong to One AbilityScore
