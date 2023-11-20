@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.exception.handler;
 
-import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
+import com.jawbr.dnd5e.characterforge.exception.TraitNotFoundException;
 import com.jawbr.dnd5e.characterforge.exception.errorResponse.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
-public class AbilityScoreExceptionHandler {
+public class TraitExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleException(AbilityScoreNotFoundException exc, WebRequest request) {
+    public ResponseEntity<ErrorResponse> handleException(TraitNotFoundException exc, WebRequest request) {
         String endpointPath = request.getDescription(false);
         if (endpointPath.startsWith("uri=")) {
             endpointPath = endpointPath.substring(4);

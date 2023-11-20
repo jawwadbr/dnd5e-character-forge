@@ -44,7 +44,7 @@ public class Skill {
     private String url;
 
     // Many Skills can belong to One AbilityScore
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "ability_score_id_fk")
     private AbilityScore abilityScore;
 

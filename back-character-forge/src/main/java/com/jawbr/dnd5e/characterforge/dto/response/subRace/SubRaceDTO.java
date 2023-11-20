@@ -13,9 +13,9 @@ public record SubRaceDTO(
         String desc,
         List<SubRaceAbilityScoreBonusDTO> ability_bonuses,
         List<EntityReferenceDTO> starting_proficiencies,
-        //languages
+        List<EntityReferenceDTO> languages,
         //language_options
-        //racial_traits
+        List<EntityReferenceDTO> racial_traits,
         String url
 ) {
 }

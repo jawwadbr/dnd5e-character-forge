@@ -55,7 +55,7 @@ public class SkillService {
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public SkillDTO findSkillByIndexName(String indexName) {
-        return Optional.of(skillRepository.findByIndexName(indexName))
+        return Optional.ofNullable(skillRepository.findByIndexName(indexName))
                 .map(skillDTOMapper)
                 .orElseThrow(() -> new SkillNotFoundException(
                         String.format("Skill with index name '%s' not found.", indexName)));

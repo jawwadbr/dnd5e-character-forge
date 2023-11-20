@@ -63,8 +63,24 @@ public class SubRace implements RaceEntity {
     private List<Proficiency> proficiencies;
 
     // Languages
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinTable(
+            name = "sub-race_languages",
+            joinColumns = @JoinColumn(name = "sub-race_id"),
+            inverseJoinColumns = @JoinColumn(name = "language_id")
+    )
+    private List<Language> languages;
+
     // languages options
+
     // racial traits
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinTable(
+            name = "sub-race_trait",
+            joinColumns = @JoinColumn(name = "sub-race_id"),
+            inverseJoinColumns = @JoinColumn(name = "trait_id")
+    )
+    private List<Trait> traits;
 
     @Override
     public String getEntityName() {

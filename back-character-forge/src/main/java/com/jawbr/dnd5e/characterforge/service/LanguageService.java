@@ -55,7 +55,7 @@ public class LanguageService {
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public LanguageDTO findLanguageByIndexName(String indexName) {
-        return Optional.of(languageRepository.findByIndexName(indexName))
+        return Optional.ofNullable(languageRepository.findByIndexName(indexName))
                 .map(languageDTOMapper)
                 .orElseThrow(() -> new LanguageNotFoundException(String.format("Language with index name '%s' not found.", indexName)));
     }

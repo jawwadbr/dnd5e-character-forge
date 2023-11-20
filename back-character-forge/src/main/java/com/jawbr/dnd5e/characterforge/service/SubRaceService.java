@@ -50,7 +50,7 @@ public class SubRaceService {
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public SubRaceDTO findSubRaceByIndexName(String indexName) {
-        return Optional.of(subRaceRepository.findByIndexName(indexName))
+        return Optional.ofNullable(subRaceRepository.findByIndexName(indexName))
                 .map(subRaceDTOMapper)
                 .orElseThrow(() -> new RaceNotFoundException(
                         String.format("Subrace with index name '%s' not found.", indexName)));

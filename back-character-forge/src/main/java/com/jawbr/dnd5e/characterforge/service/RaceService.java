@@ -55,7 +55,7 @@ public class RaceService {
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public RaceDTO findRaceByIndexName(String indexName) {
-        return Optional.of(raceRepository.findByIndexName(indexName))
+        return Optional.ofNullable(raceRepository.findByIndexName(indexName))
                 .map(raceDTOMapper)
                 .orElseThrow(() -> new RaceNotFoundException(
                         String.format("Race with index name '%s' not found.", indexName)));

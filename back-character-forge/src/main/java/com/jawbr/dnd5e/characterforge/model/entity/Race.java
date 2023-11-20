@@ -70,7 +70,7 @@ public class Race implements RaceEntity {
     @ManyToMany(mappedBy = "race", cascade = CascadeType.ALL)
     private List<RaceAbilityScoreBonus> abilityBonuses;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "race_languages",
             joinColumns = @JoinColumn(name = "race_id"),
@@ -78,7 +78,7 @@ public class Race implements RaceEntity {
     )
     private List<Language> languages;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "race_proficiency",
             joinColumns = @JoinColumn(name = "race_id"),
@@ -89,6 +89,15 @@ public class Race implements RaceEntity {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "subrace_id")
     private List<SubRace> subRaces;
+
+    // trait
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinTable(
+            name = "race_trait",
+            joinColumns = @JoinColumn(name = "race_id"),
+            inverseJoinColumns = @JoinColumn(name = "trait_id")
+    )
+    private List<Trait> traits;
 
     @Override
     public String getEntityName() {

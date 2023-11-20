@@ -53,7 +53,7 @@ public class ProficiencyService {
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public ProficiencyDTO findByIndexName(String indexName) {
-        return Optional.of(proficiencyRepository.findByIndexName(indexName))
+        return Optional.ofNullable(proficiencyRepository.findByIndexName(indexName))
                 .map(proficiencyDTOMapper)
                 .orElseThrow(() -> new ProficiencyNotFoundException(
                         String.format("Proficiency with index name '%s' not found.", indexName)));

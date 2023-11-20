@@ -2,8 +2,10 @@ package com.jawbr.dnd5e.characterforge.dto.mapper.subRace;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
+import com.jawbr.dnd5e.characterforge.model.entity.Trait;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +40,24 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                     .build());
         }
 
+        List<EntityReferenceDTO> languagesList = new ArrayList<>();
+        for(Language language : subRace.getLanguages()) {
+            languagesList.add(EntityReferenceDTO.builder()
+                    .name(language.getName())
+                    .index(language.getIndexName())
+                    .url(language.getUrl())
+                    .build());
+        }
+
+        List<EntityReferenceDTO> traitsList = new ArrayList<>();
+        for(Trait trait : subRace.getTraits()) {
+            traitsList.add(EntityReferenceDTO.builder()
+                    .name(trait.getTraitName())
+                    .index(trait.getIndexName())
+                    .url(trait.getUrl())
+                    .build());
+        }
+
         return new SubRaceDTO(
                 subRace.getIndexName(),
                 subRace.getSubRaceName(),
@@ -52,9 +72,9 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                         .map(subRaceAbilityScoreBonusDTOMapper)
                         .collect(Collectors.toList()),
                 proficienciesList,
-                //languages
+                languagesList,
                 //language_options
-                //racial_traits
+                traitsList,
                 subRace.getUrl()
         );
     }

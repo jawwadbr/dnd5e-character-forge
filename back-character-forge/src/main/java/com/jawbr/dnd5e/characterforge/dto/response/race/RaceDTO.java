@@ -26,7 +26,7 @@ public record RaceDTO(
         List<EntityReferenceDTO> languages,
         // TODO -  "language_options"
         String language_desc,
-        // traits []
+        List<EntityReferenceDTO> traits,
         List<EntityReferenceDTO> subraces,
         String url
 ) {

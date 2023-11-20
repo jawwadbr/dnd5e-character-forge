@@ -6,6 +6,7 @@ import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
+import com.jawbr.dnd5e.characterforge.model.entity.Trait;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,6 +58,15 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                     .build());
         }
 
+        List<EntityReferenceDTO> traitsList = new ArrayList<>();
+        for(Trait trait : race.getTraits()) {
+            traitsList.add(EntityReferenceDTO.builder()
+                    .name(trait.getTraitName())
+                    .index(trait.getIndexName())
+                    .url(trait.getUrl())
+                    .build());
+        }
+
         return new RaceDTO(
                 race.getIndexName(),
                 race.getRaceName(),
@@ -72,6 +82,7 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 proficienciesList,
                 languagesList,
                 race.getLanguage_desc(),
+                traitsList,
                 subRacesList,
                 race.getUrl()
         );

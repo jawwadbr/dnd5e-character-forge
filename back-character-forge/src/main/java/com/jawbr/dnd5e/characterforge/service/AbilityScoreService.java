@@ -55,7 +55,7 @@ public class AbilityScoreService {
      * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
      */
     public AbilityScoreDTO findAbilityScoresByIndexName(String indexName) {
-        return Optional.of(abilityScoreRepository.findByIndexName(indexName))
+        return Optional.ofNullable(abilityScoreRepository.findByIndexName(indexName))
                 .map(abilityScoreDTOMapper)
                 .orElseThrow(() -> new AbilityScoreNotFoundException(
                         String.format("Ability score with index name '%s' not found.", indexName)));
