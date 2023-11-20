@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.abilityScore;
 
-import com.jawbr.dnd5e.characterforge.dto.response.ResultListDTOResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ public class AbilityScoreDTOResponseMapper implements Function<List<AbilityScore
     @Override
     public FindAllDTOResponse apply(List<AbilityScore> abilityScores) {
 
-        List<ResultListDTOResponse> abilityScoreDTOList = new ArrayList<>();
+        List<EntityReferenceDTO> abilityScoreDTOList = new ArrayList<>();
         for(AbilityScore ab : abilityScores) {
-            abilityScoreDTOList.add(ResultListDTOResponse.builder()
+            abilityScoreDTOList.add(EntityReferenceDTO.builder()
                     .name(ab.getShortName())
                     .index(ab.getIndexName())
                     .url(ab.getUrl())

@@ -1,7 +1,7 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.trait;
 
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
-import com.jawbr.dnd5e.characterforge.dto.response.ResultListDTOResponse;
 import com.jawbr.dnd5e.characterforge.model.entity.Trait;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,9 @@ public class TraitDTOResponseMapper implements Function<List<Trait>, FindAllDTOR
     @Override
     public FindAllDTOResponse apply(List<Trait> traits) {
 
-        List<ResultListDTOResponse> list = new ArrayList<>();
+        List<EntityReferenceDTO> list = new ArrayList<>();
         for(Trait trait : traits) {
-            list.add(ResultListDTOResponse.builder()
+            list.add(EntityReferenceDTO.builder()
                     .name(trait.getTraitName())
                     .index(trait.getIndexName())
                     .url(trait.getUrl())

@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.race;
 
-import com.jawbr.dnd5e.characterforge.dto.response.ResultListDTOResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import org.springframework.stereotype.Service;
@@ -20,9 +20,9 @@ public class RaceDTOResponseMapper implements Function<List<Race>, FindAllDTORes
     @Override
     public FindAllDTOResponse apply(List<Race> races) {
 
-        List<ResultListDTOResponse> raceDTOLists = new ArrayList<>();
+        List<EntityReferenceDTO> raceDTOLists = new ArrayList<>();
         for(Race race : races) {
-            raceDTOLists.add(ResultListDTOResponse.builder()
+            raceDTOLists.add(EntityReferenceDTO.builder()
                     .name(race.getRaceName())
                     .index(race.getIndexName())
                     .url(race.getUrl())

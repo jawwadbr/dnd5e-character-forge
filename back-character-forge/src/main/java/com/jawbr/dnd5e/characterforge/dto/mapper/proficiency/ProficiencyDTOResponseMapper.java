@@ -1,6 +1,6 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.proficiency;
 
-import com.jawbr.dnd5e.characterforge.dto.response.ResultListDTOResponse;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ public class ProficiencyDTOResponseMapper implements Function<List<Proficiency>,
     @Override
     public FindAllDTOResponse apply(List<Proficiency> proficiencies) {
 
-        List<ResultListDTOResponse> list = new ArrayList<>();
+        List<EntityReferenceDTO> list = new ArrayList<>();
         for(Proficiency proficiency : proficiencies) {
-            list.add(ResultListDTOResponse.builder()
+            list.add(EntityReferenceDTO.builder()
                     .name(proficiency.getName())
                     .index(proficiency.getIndexName())
                     .url(proficiency.getUrl())

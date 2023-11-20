@@ -7,6 +7,6 @@ import java.util.List;
 @Builder
 public record FindAllDTOResponse(
         int count,
-        List<ResultListDTOResponse> results
+        List<EntityReferenceDTO> results
 ) {
 }
