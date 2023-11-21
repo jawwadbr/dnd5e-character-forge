@@ -71,6 +71,28 @@ public class TraitDTOMapper implements Function<Trait, TraitDTO> {
                     .build();
         }
 
+        List<EntityReferenceOptionDTO> proficiencyChoicesFromOptions = new ArrayList<>();
+        OptionSetDTO proficiencyChoices = null;
+        if(trait.getProficiencyOptions() != null) {
+            for(Proficiency proficiency : trait.getProficiencyOptions().getFrom()) {
+                proficiencyChoicesFromOptions.add(EntityReferenceOptionDTO.builder()
+                        .item(EntityReferenceDTO.builder()
+                                .index(proficiency.getIndexName())
+                                .name(proficiency.getName())
+                                .url(proficiency.getUrl())
+                                .build())
+                        .build());
+            }
+            proficiencyChoices = OptionSetDTO.builder()
+                    .choose(trait.getProficiencyOptions().getChoose())
+                    .desc(trait.getProficiencyOptions().getDesc())
+                    .type(trait.getProficiencyOptions().getType())
+                    .from(FromOptionSetDTO.builder()
+                            .options(proficiencyChoicesFromOptions)
+                            .build())
+                    .build();
+        }
+
         return TraitDTO.builder()
                 .name(trait.getTraitName())
                 .index(trait.getIndexName())
@@ -80,6 +102,7 @@ public class TraitDTOMapper implements Function<Trait, TraitDTO> {
                 .races(raceList)
                 .proficiencies(proficiencyList)
                 .language_options(languageOptions)
+                .proficiency_choices(proficiencyChoices)
                 .build();
     }
 }

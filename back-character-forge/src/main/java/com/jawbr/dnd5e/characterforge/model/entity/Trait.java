@@ -61,6 +61,9 @@ public class Trait {
     private List<Proficiency> proficiencies;
 
     // proficiency_choices
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private StartingProficiencyOption proficiencyOptions;
+
     // trait_specific -- subtrait_options
 
     // language_options

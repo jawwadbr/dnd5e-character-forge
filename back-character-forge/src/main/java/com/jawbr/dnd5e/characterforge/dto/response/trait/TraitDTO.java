@@ -16,8 +16,8 @@ public record TraitDTO(
         String desc,
         List<EntityReferenceDTO> proficiencies,
         OptionSetDTO language_options,
+        OptionSetDTO proficiency_choices,
         /*
-         * proficiency_choices
          * trait_specific -- subtrait_options
          */
         String url
@@ -26,5 +26,11 @@ public record TraitDTO(
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public OptionSetDTO getLanguage_options() {
         return language_options;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Override
+    public OptionSetDTO proficiency_choices() {
+        return proficiency_choices;
     }
 }
