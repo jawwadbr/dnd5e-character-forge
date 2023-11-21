@@ -23,12 +23,12 @@ public class ProficiencyDTOMapper implements Function<Proficiency, ProficiencyDT
 
         List<EntityReferenceDTO> proficiencyRaceDTOS = Stream.concat(
                 proficiency.getRaces().stream().map(race -> EntityReferenceDTO.builder()
-                        .name(race.getEntityName())
+                        .name(race.getRaceName())
                         .index(race.getIndexName())
                         .url(race.getUrl())
                         .build()),
                 proficiency.getSubRaces().stream().map(subRace -> EntityReferenceDTO.builder()
-                        .name(subRace.getEntityName())
+                        .name(subRace.getSubRaceName())
                         .index(subRace.getIndexName())
                         .url(subRace.getUrl())
                         .build())

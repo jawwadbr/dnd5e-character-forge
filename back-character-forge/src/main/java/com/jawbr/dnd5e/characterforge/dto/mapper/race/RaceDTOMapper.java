@@ -1,6 +1,8 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.race;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
 import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
@@ -67,6 +69,27 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                     .build());
         }
 
+        List<EntityReferenceDTO> languageFromOptions = new ArrayList<>();
+        OptionSetDTO languageOptions = null;
+        if(race.getLanguageOptions() != null) {
+            for(Language language : race.getLanguageOptions().getFrom()) {
+                languageFromOptions.add(EntityReferenceDTO.builder()
+                        .name(language.getName())
+                        .index(language.getIndexName())
+                        .url(language.getUrl())
+                        .build());
+            }
+            languageOptions = OptionSetDTO.builder()
+                    .choose(race.getLanguageOptions().getChoose())
+                    .desc(race.getLanguageOptions().getDesc())
+                    .type(race.getLanguageOptions().getType())
+                    .from(FromOptionSetDTO.builder()
+                            .options(languageFromOptions)
+                            .build())
+                    .build();
+        }
+
+
         return new RaceDTO(
                 race.getIndexName(),
                 race.getRaceName(),
@@ -81,6 +104,7 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                 race.getSize_desc(),
                 proficienciesList,
                 languagesList,
+                languageOptions,
                 race.getLanguage_desc(),
                 traitsList,
                 subRacesList,

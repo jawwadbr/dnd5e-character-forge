@@ -1,6 +1,5 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
-import com.jawbr.dnd5e.characterforge.model.util.RaceEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +29,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "sub_race")
-public class SubRace implements RaceEntity {
+public class SubRace {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,14 +47,14 @@ public class SubRace implements RaceEntity {
     @Column(name = "url", nullable = false, unique = true, length = 128)
     private String url;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     private Race race;
 
     @ManyToMany(mappedBy = "subRace", cascade = CascadeType.ALL)
     private List<SubRaceAbilityScoreBonus> abilityBonuses;
 
     // starting proficiencies
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "sub-race_proficiency",
             joinColumns = @JoinColumn(name = "sub-race_id"),
@@ -63,7 +63,7 @@ public class SubRace implements RaceEntity {
     private List<Proficiency> proficiencies;
 
     // Languages
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "sub-race_languages",
             joinColumns = @JoinColumn(name = "sub-race_id"),
@@ -71,10 +71,10 @@ public class SubRace implements RaceEntity {
     )
     private List<Language> languages;
 
-    // languages options
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private LanguageOption languageOptions;
 
-    // racial traits
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "sub-race_trait",
             joinColumns = @JoinColumn(name = "sub-race_id"),
@@ -82,8 +82,4 @@ public class SubRace implements RaceEntity {
     )
     private List<Trait> traits;
 
-    @Override
-    public String getEntityName() {
-        return getSubRaceName();
-    }
 }

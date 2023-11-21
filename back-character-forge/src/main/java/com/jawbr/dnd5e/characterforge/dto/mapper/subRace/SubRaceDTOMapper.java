@@ -1,6 +1,8 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.subRace;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
 import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
@@ -58,6 +60,27 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                     .build());
         }
 
+        List<EntityReferenceDTO> languageFromOptions = new ArrayList<>();
+        OptionSetDTO languageOptions = null;
+        if(subRace.getLanguageOptions() != null) {
+            for(Language language : subRace.getLanguageOptions().getFrom()) {
+                languageFromOptions.add(EntityReferenceDTO.builder()
+                        .name(language.getName())
+                        .index(language.getIndexName())
+                        .url(language.getUrl())
+                        .build());
+            }
+            languageOptions = OptionSetDTO.builder()
+                    .choose(subRace.getLanguageOptions().getChoose())
+                    .desc(subRace.getLanguageOptions().getDesc())
+                    .type(subRace.getLanguageOptions().getType())
+                    .from(FromOptionSetDTO.builder()
+                            .options(languageFromOptions)
+                            .build())
+                    .build();
+        }
+
+
         return new SubRaceDTO(
                 subRace.getIndexName(),
                 subRace.getSubRaceName(),
@@ -73,7 +96,7 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                         .collect(Collectors.toList()),
                 proficienciesList,
                 languagesList,
-                //language_options
+                languageOptions,
                 traitsList,
                 subRace.getUrl()
         );

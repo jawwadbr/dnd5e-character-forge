@@ -51,7 +51,6 @@ public class Trait {
     @Column(name = "trait_desc", columnDefinition = "TEXT", nullable = false)
     private String desc;
 
-    // proficiencies
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "trait_proficiency",

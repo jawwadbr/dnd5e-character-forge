@@ -2,6 +2,7 @@ package com.jawbr.dnd5e.characterforge.dto.response.race;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import lombok.Builder;
 
@@ -24,7 +25,7 @@ public record RaceDTO(
          * TODO -  "starting_proficiency_options"
          */
         List<EntityReferenceDTO> languages,
-        // TODO -  "language_options"
+        OptionSetDTO language_options,
         String language_desc,
         List<EntityReferenceDTO> traits,
         List<EntityReferenceDTO> subraces,

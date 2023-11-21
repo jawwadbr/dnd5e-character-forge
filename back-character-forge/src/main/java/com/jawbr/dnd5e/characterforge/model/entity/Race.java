@@ -1,6 +1,5 @@
 package com.jawbr.dnd5e.characterforge.model.entity;
 
-import com.jawbr.dnd5e.characterforge.model.util.RaceEntity;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +32,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "race")
-public class Race implements RaceEntity {
+public class Race {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -90,7 +90,6 @@ public class Race implements RaceEntity {
     @JoinColumn(name = "subrace_id")
     private List<SubRace> subRaces;
 
-    // trait
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "race_trait",
@@ -99,8 +98,7 @@ public class Race implements RaceEntity {
     )
     private List<Trait> traits;
 
-    @Override
-    public String getEntityName() {
-        return getRaceName();
-    }
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private LanguageOption languageOptions;
+
 }
