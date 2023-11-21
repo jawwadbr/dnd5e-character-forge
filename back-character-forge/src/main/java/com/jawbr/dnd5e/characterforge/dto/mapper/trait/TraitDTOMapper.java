@@ -1,6 +1,7 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.trait;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.trait.TraitDTO;
@@ -48,14 +49,16 @@ public class TraitDTOMapper implements Function<Trait, TraitDTO> {
                     .build());
         }
 
-        List<EntityReferenceDTO> languageFromOptions = new ArrayList<>();
+        List<EntityReferenceOptionDTO> languageFromOptions = new ArrayList<>();
         OptionSetDTO languageOptions = null;
         if(trait.getLanguageOptions() != null) {
             for(Language language : trait.getLanguageOptions().getFrom()) {
-                languageFromOptions.add(EntityReferenceDTO.builder()
-                        .name(language.getName())
-                        .index(language.getIndexName())
-                        .url(language.getUrl())
+                languageFromOptions.add(EntityReferenceOptionDTO.builder()
+                        .item(EntityReferenceDTO.builder()
+                                .index(language.getIndexName())
+                                .name(language.getName())
+                                .url(language.getUrl())
+                                .build())
                         .build());
             }
             languageOptions = OptionSetDTO.builder()

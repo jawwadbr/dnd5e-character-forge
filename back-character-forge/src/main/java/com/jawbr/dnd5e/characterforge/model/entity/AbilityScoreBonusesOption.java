@@ -27,8 +27,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "language_option")
-public class LanguageOption {
+@Table(name = "ability_score_option")
+public class AbilityScoreBonusesOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +41,16 @@ public class LanguageOption {
     @Column(nullable = false)
     private OptionType type;
 
+    @Column(name = "bonus", nullable = false, columnDefinition = "integer default 1")
+    private Integer bonus;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
-            name = "language_options",
-            joinColumns = @JoinColumn(name = "language_option_id"),
-            inverseJoinColumns = @JoinColumn(name = "language_id")
+            name = "ability_score_options",
+            joinColumns = @JoinColumn(name = "ability_score_option_id"),
+            inverseJoinColumns = @JoinColumn(name = "ability_score_id")
     )
-    private List<Language> from;
+    private List<AbilityScore> from;
 
     @Column(name = "descr", columnDefinition = "TEXT")
     private String desc;

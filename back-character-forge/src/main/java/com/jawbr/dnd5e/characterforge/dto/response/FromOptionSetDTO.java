@@ -6,6 +6,6 @@ import java.util.List;
 
 @Builder
 public record FromOptionSetDTO(
-        List<EntityReferenceDTO> options
+        List<EntityReferenceOptionDTO> options
 ) {
 }

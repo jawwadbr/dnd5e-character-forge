@@ -15,15 +15,14 @@ public record RaceDTO(
         String name,
         int speed,
         List<RaceAbilityBonusesDTO> ability_bonuses,
-        // TODO - ability_bonus_option - For races like Half-elf that get +2 in CHA and +1 in another of player choice
+        OptionSetDTO ability_bonus_options,
         String alignment,
         String age,
         Size size,
         String size_description,
         List<EntityReferenceDTO> starting_proficiencies,
-        /*
-         * TODO -  "starting_proficiency_options"
-         */
+        //
+        OptionSetDTO starting_proficiency_options,
         List<EntityReferenceDTO> languages,
         OptionSetDTO language_options,
         String language_desc,

@@ -1,6 +1,7 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.subRace;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
@@ -60,14 +61,16 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                     .build());
         }
 
-        List<EntityReferenceDTO> languageFromOptions = new ArrayList<>();
+        List<EntityReferenceOptionDTO> languageFromOptions = new ArrayList<>();
         OptionSetDTO languageOptions = null;
         if(subRace.getLanguageOptions() != null) {
             for(Language language : subRace.getLanguageOptions().getFrom()) {
-                languageFromOptions.add(EntityReferenceDTO.builder()
-                        .name(language.getName())
-                        .index(language.getIndexName())
-                        .url(language.getUrl())
+                languageFromOptions.add(EntityReferenceOptionDTO.builder()
+                        .item(EntityReferenceDTO.builder()
+                                .index(language.getIndexName())
+                                .name(language.getName())
+                                .url(language.getUrl())
+                                .build())
                         .build());
             }
             languageOptions = OptionSetDTO.builder()
@@ -79,7 +82,6 @@ public class SubRaceDTOMapper implements Function<SubRace, SubRaceDTO> {
                             .build())
                     .build();
         }
-
 
         return new SubRaceDTO(
                 subRace.getIndexName(),

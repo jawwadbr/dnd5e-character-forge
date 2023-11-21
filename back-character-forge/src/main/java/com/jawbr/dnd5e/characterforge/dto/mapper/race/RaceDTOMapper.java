@@ -1,9 +1,11 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.race;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
+import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
 import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
@@ -69,14 +71,16 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                     .build());
         }
 
-        List<EntityReferenceDTO> languageFromOptions = new ArrayList<>();
+        List<EntityReferenceOptionDTO> languageFromOptions = new ArrayList<>();
         OptionSetDTO languageOptions = null;
         if(race.getLanguageOptions() != null) {
             for(Language language : race.getLanguageOptions().getFrom()) {
-                languageFromOptions.add(EntityReferenceDTO.builder()
-                        .name(language.getName())
-                        .index(language.getIndexName())
-                        .url(language.getUrl())
+                languageFromOptions.add(EntityReferenceOptionDTO.builder()
+                        .item(EntityReferenceDTO.builder()
+                                .index(language.getIndexName())
+                                .name(language.getName())
+                                .url(language.getUrl())
+                                .build())
                         .build());
             }
             languageOptions = OptionSetDTO.builder()
@@ -89,6 +93,50 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                     .build();
         }
 
+        List<EntityReferenceOptionDTO> abilityScoreBonusesFromOptions = new ArrayList<>();
+        OptionSetDTO abilityScoreBonusesOptions = null;
+        if(race.getAbilityBonusesOptions() != null) {
+            for(AbilityScore abilityScore : race.getAbilityBonusesOptions().getFrom()) {
+                abilityScoreBonusesFromOptions.add(EntityReferenceOptionDTO.builder()
+                        .ability_score(EntityReferenceDTO.builder()
+                                .index(abilityScore.getIndexName())
+                                .name(abilityScore.getShortName())
+                                .url(abilityScore.getUrl())
+                                .build())
+                        .bonus(race.getAbilityBonusesOptions().getBonus())
+                        .build());
+            }
+            abilityScoreBonusesOptions = OptionSetDTO.builder()
+                    .choose(race.getAbilityBonusesOptions().getChoose())
+                    .desc(race.getAbilityBonusesOptions().getDesc())
+                    .type(race.getAbilityBonusesOptions().getType())
+                    .from(FromOptionSetDTO.builder()
+                            .options(abilityScoreBonusesFromOptions)
+                            .build())
+                    .build();
+        }
+
+        List<EntityReferenceOptionDTO> startingProficienciesFromOptions = new ArrayList<>();
+        OptionSetDTO startingProficiencies = null;
+        if(race.getProficiencyOptions() != null) {
+            for(Proficiency proficiency : race.getProficiencyOptions().getFrom()) {
+                startingProficienciesFromOptions.add(EntityReferenceOptionDTO.builder()
+                        .item(EntityReferenceDTO.builder()
+                                .index(proficiency.getIndexName())
+                                .name(proficiency.getName())
+                                .url(proficiency.getUrl())
+                                .build())
+                        .build());
+            }
+            startingProficiencies = OptionSetDTO.builder()
+                    .choose(race.getProficiencyOptions().getChoose())
+                    .desc(race.getProficiencyOptions().getDesc())
+                    .type(race.getProficiencyOptions().getType())
+                    .from(FromOptionSetDTO.builder()
+                            .options(startingProficienciesFromOptions)
+                            .build())
+                    .build();
+        }
 
         return new RaceDTO(
                 race.getIndexName(),
@@ -98,11 +146,13 @@ public class RaceDTOMapper implements Function<Race, RaceDTO> {
                         .stream()
                         .map(raceAbilityBonusesDTOMapper)
                         .collect(Collectors.toList()),
+                abilityScoreBonusesOptions,
                 race.getAlignment(),
                 race.getAge_desc(),
                 race.getSize(),
                 race.getSize_desc(),
                 proficienciesList,
+                startingProficiencies,
                 languagesList,
                 languageOptions,
                 race.getLanguage_desc(),

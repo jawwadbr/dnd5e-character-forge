@@ -101,4 +101,10 @@ public class Race {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private LanguageOption languageOptions;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private AbilityScoreBonusesOption abilityBonusesOptions;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private StartingProficiencyOption proficiencyOptions;
+
 }
