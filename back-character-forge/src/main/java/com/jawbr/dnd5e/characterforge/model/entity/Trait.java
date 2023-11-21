@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -61,7 +62,10 @@ public class Trait {
 
     // proficiency_choices
     // trait_specific -- subtrait_options
+
     // language_options
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private LanguageOption languageOptions;
 
     @Column(name = "url", nullable = false, unique = true, length = 128)
     private String url;

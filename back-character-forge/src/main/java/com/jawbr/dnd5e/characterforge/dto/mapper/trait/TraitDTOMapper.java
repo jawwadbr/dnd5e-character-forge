@@ -1,7 +1,10 @@
 package com.jawbr.dnd5e.characterforge.dto.mapper.trait;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.trait.TraitDTO;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
@@ -45,6 +48,26 @@ public class TraitDTOMapper implements Function<Trait, TraitDTO> {
                     .build());
         }
 
+        List<EntityReferenceDTO> languageFromOptions = new ArrayList<>();
+        OptionSetDTO languageOptions = null;
+        if(trait.getLanguageOptions() != null) {
+            for(Language language : trait.getLanguageOptions().getFrom()) {
+                languageFromOptions.add(EntityReferenceDTO.builder()
+                        .name(language.getName())
+                        .index(language.getIndexName())
+                        .url(language.getUrl())
+                        .build());
+            }
+            languageOptions = OptionSetDTO.builder()
+                    .choose(trait.getLanguageOptions().getChoose())
+                    .desc(trait.getLanguageOptions().getDesc())
+                    .type(trait.getLanguageOptions().getType())
+                    .from(FromOptionSetDTO.builder()
+                            .options(languageFromOptions)
+                            .build())
+                    .build();
+        }
+
         return TraitDTO.builder()
                 .name(trait.getTraitName())
                 .index(trait.getIndexName())
@@ -53,6 +76,7 @@ public class TraitDTOMapper implements Function<Trait, TraitDTO> {
                 .subraces(subRacesList)
                 .races(raceList)
                 .proficiencies(proficiencyList)
+                .language_options(languageOptions)
                 .build();
     }
 }
