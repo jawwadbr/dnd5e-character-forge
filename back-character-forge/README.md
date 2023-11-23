@@ -27,6 +27,10 @@ The API will be available at [localhost:8080](http://localhost:8080).
 docker-compose -f docker-compose.yml up -d
 ```
 
+The API will be available at [localhost:8080](http://localhost:8080).
+
+#### Stopping Docker Container
+
 * To stop the container, first, find the container ID by running this command.
 ```
 docker ps
@@ -36,5 +40,3 @@ docker ps
 ```
 docker stop <container_id>
 ```
-
-The API will be available at [localhost:8080](http://localhost:8080).
