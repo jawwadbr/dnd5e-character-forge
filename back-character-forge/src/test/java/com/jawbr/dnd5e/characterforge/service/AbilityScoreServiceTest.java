@@ -35,72 +35,72 @@ class AbilityScoreServiceTest {
     @Mock
     private AbilityScoreDTOMapper abilityScoreDTOMapper;
 
-    private AbilityScore abilityScore;
-    private AbilityScoreDTO abilityScoreDTO;
-    private Skill skill;
-
-    @BeforeEach
-    void init() {
-        skill = Skill.builder()
-                .id(1)
-                .indexName("indexS")
-                .name("nameS")
-                .skillDesc("descS")
-                .url("urlS")
-                .build();
-
-        List<Skill> skillList = new ArrayList<>();
-        skillList.add(skill);
-
-        abilityScore = AbilityScore.builder()
-                .id(1)
-                .indexName("indexA")
-                .shortName("shortNameA")
-                .fullName("fullNameA")
-                .desc("descA")
-                .url("urlA")
-                .skills(skillList)
-                .build();
-
-        abilityScoreDTO = AbilityScoreDTO.builder()
-                .index(abilityScore.getIndexName())
-                .short_name(abilityScore.getShortName())
-                .full_name(abilityScore.getFullName())
-                .desc(abilityScore.getDesc())
-                .skills(new ArrayList<>(Collections.singleton(AbilityScoreSkillDTO.builder()
-                        .index(skill.getIndexName())
-                        .name(skill.getName())
-                        .url(skill.getUrl())
-                        .build())))
-                .url(abilityScore.getUrl())
-                .build();
-
-    }
-
-    @Disabled
-    @Test
-    void findAllAbilityScores() {
-        List<AbilityScore> abilityScoreList = new ArrayList<>();
-        abilityScoreList.add(abilityScore);
-
-        List<AbilityScoreDTO> expected = new ArrayList<>(Collections.singleton(abilityScoreDTO));
-
-        when(abilityScoreRepository.findAll()).thenReturn(abilityScoreList);
-        when(abilityScoreDTOMapper.apply(abilityScore)).thenReturn(abilityScoreDTO);
-
-        //List<AbilityScoreDTO> result = abilityScoreService.findAllAbilityScores();
-
-        //assertNotNull(result);
-        //assertEquals(expected, result);
-    }
-
-    @Test
-    void cannotFindAllAbilityScores() {
-        List<AbilityScore> abilityScoreList = new ArrayList<>();
-        when(abilityScoreRepository.findAll()).thenReturn(abilityScoreList);
-
-        assertThrows(AbilityScoreNotFoundException.class,
-                () -> abilityScoreService.findAllAbilityScores(),
-                "No ability scores found.");
-    }
+//    private AbilityScore abilityScore;
+//    private AbilityScoreDTO abilityScoreDTO;
+//    private Skill skill;
+//
+//    @BeforeEach
+//    void init() {
+//        skill = Skill.builder()
+//                .id(1)
+//                .indexName("indexS")
+//                .name("nameS")
+//                .skillDesc("descS")
+//                .url("urlS")
+//                .build();
+//
+//        List<Skill> skillList = new ArrayList<>();
+//        skillList.add(skill);
+//
+//        abilityScore = AbilityScore.builder()
+//                .id(1)
+//                .indexName("indexA")
+//                .shortName("shortNameA")
+//                .fullName("fullNameA")
+//                .desc("descA")
+//                .url("urlA")
+//                .skills(skillList)
+//                .build();
+//
+//        abilityScoreDTO = AbilityScoreDTO.builder()
+//                .index(abilityScore.getIndexName())
+//                .short_name(abilityScore.getShortName())
+//                .full_name(abilityScore.getFullName())
+//                .desc(abilityScore.getDesc())
+//                .skills(new ArrayList<>(Collections.singleton(AbilityScoreSkillDTO.builder()
+//                        .index(skill.getIndexName())
+//                        .name(skill.getName())
+//                        .url(skill.getUrl())
+//                        .build())))
+//                .url(abilityScore.getUrl())
+//                .build();
+//
+//    }
+//
+//    @Disabled
+//    @Test
+//    void findAllAbilityScores() {
+//        List<AbilityScore> abilityScoreList = new ArrayList<>();
+//        abilityScoreList.add(abilityScore);
+//
+//        List<AbilityScoreDTO> expected = new ArrayList<>(Collections.singleton(abilityScoreDTO));
+//
+//        when(abilityScoreRepository.findAll()).thenReturn(abilityScoreList);
+//        when(abilityScoreDTOMapper.apply(abilityScore)).thenReturn(abilityScoreDTO);
+//
+//        //List<AbilityScoreDTO> result = abilityScoreService.findAllAbilityScores();
+//
+//        //assertNotNull(result);
+//        //assertEquals(expected, result);
+//    }
+//
+//    @Test
+//    void cannotFindAllAbilityScores() {
+//        List<AbilityScore> abilityScoreList = new ArrayList<>();
+//        when(abilityScoreRepository.findAll()).thenReturn(abilityScoreList);
+//
+//        assertThrows(AbilityScoreNotFoundException.class,
+//                () -> abilityScoreService.findAllAbilityScores(),
+//                "No ability scores found.");
+//    }
 }

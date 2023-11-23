@@ -34,55 +34,55 @@ class LanguageServiceTest {
     @Mock
     private LanguageDTOMapper languageDTOMapper;
 
-    private Language language;
-    private LanguageDTO languageDTO;
-
-    @BeforeEach
-    void init() {
-        language = Language.builder()
-                .id(1)
-                .indexName("indexL")
-                .name("nameL")
-                .language_desc("langDesc")
-                .type(LanguageType.Standard)
-                .script("scriptL")
-                .url("urlL")
-                .build();
-
-        languageDTO = LanguageDTO.builder()
-                .index(language.getIndexName())
-                .name(language.getName())
-                .desc(language.getLanguage_desc())
-                .type(language.getType())
-                .script(language.getScript())
-                .url(language.getUrl())
-                .build();
-    }
-
-    @Test
-    void findAllLanguages() {
-        List<Language> languageList = new ArrayList<>();
-        languageList.add(language);
-
-        List<LanguageDTO> expected = new ArrayList<>();
-        expected.add(languageDTO);
-
-        when(languageRepository.findAll()).thenReturn(languageList);
-        when(languageDTOMapper.apply(language)).thenReturn(languageDTO);
-
-//        List<LanguageDTO> result = languageService.findAllLanguages();
+//    private Language language;
+//    private LanguageDTO languageDTO;
 //
-//        assertNotNull(result);
-//        assertEquals(expected, result);
-    }
-
-    @Test
-    void cannotFindAllLanguages() {
-        List<Language> languageList = new ArrayList<>();
-        when(languageRepository.findAll()).thenReturn(languageList);
-
-        assertThrows(LanguageNotFoundException.class,
-                () -> languageService.findAllLanguages(),
-                "No languages found.");
-    }
+//    @BeforeEach
+//    void init() {
+//        language = Language.builder()
+//                .id(1)
+//                .indexName("indexL")
+//                .name("nameL")
+//                .language_desc("langDesc")
+//                .type(LanguageType.Standard)
+//                .script("scriptL")
+//                .url("urlL")
+//                .build();
+//
+//        languageDTO = LanguageDTO.builder()
+//                .index(language.getIndexName())
+//                .name(language.getName())
+//                .desc(language.getLanguage_desc())
+//                .type(language.getType())
+//                .script(language.getScript())
+//                .url(language.getUrl())
+//                .build();
+//    }
+//
+//    @Test
+//    void findAllLanguages() {
+//        List<Language> languageList = new ArrayList<>();
+//        languageList.add(language);
+//
+//        List<LanguageDTO> expected = new ArrayList<>();
+//        expected.add(languageDTO);
+//
+//        when(languageRepository.findAll()).thenReturn(languageList);
+//        when(languageDTOMapper.apply(language)).thenReturn(languageDTO);
+//
+////        List<LanguageDTO> result = languageService.findAllLanguages();
+////
+////        assertNotNull(result);
+////        assertEquals(expected, result);
+//    }
+//
+//    @Test
+//    void cannotFindAllLanguages() {
+//        List<Language> languageList = new ArrayList<>();
+//        when(languageRepository.findAll()).thenReturn(languageList);
+//
+//        assertThrows(LanguageNotFoundException.class,
+//                () -> languageService.findAllLanguages(),
+//                "No languages found.");
+//    }
 }

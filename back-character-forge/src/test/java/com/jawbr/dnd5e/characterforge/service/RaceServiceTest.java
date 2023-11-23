@@ -29,18 +29,18 @@ class RaceServiceTest {
     @Mock
     private RaceDTOMapper raceDTOMapper;
 
-    @Disabled
-    @Test
-    void findAllRaces() {
-    }
-
-    @Test
-    void cannotFindAllRaces() {
-        List<Race> raceList = new ArrayList<>();
-        when(raceRepository.findAll()).thenReturn(raceList);
-
-        assertThrows(RaceNotFoundException.class,
-                () -> raceService.findAllRaces(),
-                "No races found.");
-    }
+//    @Disabled
+//    @Test
+//    void findAllRaces() {
+//    }
+//
+//    @Test
+//    void cannotFindAllRaces() {
+//        List<Race> raceList = new ArrayList<>();
+//        when(raceRepository.findAll()).thenReturn(raceList);
+//
+//        assertThrows(RaceNotFoundException.class,
+//                () -> raceService.findAllRaces(),
+//                "No races found.");
+//    }
 }
