@@ -6,10 +6,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.abilityScore.AbilityScoreDTORes
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
 import com.jawbr.dnd5e.characterforge.exception.AbilityScoreNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.repository.AbilityScoreRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
@@ -34,7 +38,7 @@ public class AbilityScoreService {
     }
 
     /**
-     * Method to find all Ability Scores inside the database
+     * Method to find all Ability Scores inside the database in alphabetical order
      *
      * @return a List containing all Ability Scores mapped into AbilityScoreDTO
      * @throws AbilityScoreNotFoundException when no ability score is found inside the database
@@ -43,6 +47,9 @@ public class AbilityScoreService {
     public FindAllDTOResponse findAllAbilityScores() {
         return Optional.of(abilityScoreRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(AbilityScore::getShortName))
+                        .collect(Collectors.toList()))
                 .map(abilityScoreDTOResponseMapper)
                 .orElseThrow(() -> new AbilityScoreNotFoundException("No ability scores found."));
     }

@@ -6,10 +6,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.skill.SkillDTOResponseMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillDTO;
 import com.jawbr.dnd5e.characterforge.exception.SkillNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
+import com.jawbr.dnd5e.characterforge.model.entity.Skill;
 import com.jawbr.dnd5e.characterforge.repository.SkillRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
@@ -34,7 +38,7 @@ public class SkillService {
     }
 
     /**
-     * Method to find all Skills inside the database
+     * Method to find all Skills inside the database in alphabetical order
      *
      * @return a List containing all Skills mapped into SkillDTO
      * @throws SkillNotFoundException when no skills are found inside the database
@@ -43,6 +47,9 @@ public class SkillService {
     public FindAllDTOResponse findAllSkills() {
         return Optional.of(skillRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(Skill::getName))
+                        .collect(Collectors.toList()))
                 .map(skillDTOResponseMapper)
                 .orElseThrow(() -> new SkillNotFoundException("No skills found."));
     }

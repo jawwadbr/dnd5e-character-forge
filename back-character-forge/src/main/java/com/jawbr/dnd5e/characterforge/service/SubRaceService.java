@@ -5,10 +5,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.subRace.SubRaceDTOResponseMappe
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.subRace.SubRaceDTO;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
+import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
 import com.jawbr.dnd5e.characterforge.repository.SubRaceRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
@@ -29,7 +33,7 @@ public class SubRaceService {
     }
 
     /**
-     * Method to find all sub-races inside the database
+     * Method to find all sub-races inside the database in alphabetical order
      *
      * @return a List containing all sub-races mapped into SubRaceDTO
      * @throws RaceNotFoundException when no sub-races are found inside the database
@@ -38,6 +42,9 @@ public class SubRaceService {
     public FindAllDTOResponse findAllSubRaces() {
         return Optional.of(subRaceRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(SubRace::getSubRaceName))
+                        .collect(Collectors.toList()))
                 .map(subRaceDTOResponseMapper)
                 .orElseThrow(() -> new RaceNotFoundException("No sub races found."));
     }

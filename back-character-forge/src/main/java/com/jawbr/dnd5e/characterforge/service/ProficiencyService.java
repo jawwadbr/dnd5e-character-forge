@@ -6,10 +6,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.proficiency.ProficiencyDTORespo
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyDTO;
 import com.jawbr.dnd5e.characterforge.exception.ProficiencyNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
+import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.repository.ProficiencyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
@@ -32,7 +36,7 @@ public class ProficiencyService {
     }
 
     /**
-     * Method to find all proficiencies inside the database
+     * Method to find all proficiencies inside the database in alphabetical order
      *
      * @return a List containing all proficiencies mapped into ProficiencyDTO
      * @throws ProficiencyNotFoundException when no proficiencies are found inside the database
@@ -41,6 +45,9 @@ public class ProficiencyService {
     public FindAllDTOResponse findAllProficiencies() {
         return Optional.of(proficiencyRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(Proficiency::getName))
+                        .collect(Collectors.toList()))
                 .map(proficiencyDTOResponseMapper)
                 .orElseThrow(() -> new ProficiencyNotFoundException("No proficiencies found."));
     }

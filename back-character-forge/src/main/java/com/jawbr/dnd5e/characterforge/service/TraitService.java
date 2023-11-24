@@ -5,10 +5,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.trait.TraitDTOResponseMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.trait.TraitDTO;
 import com.jawbr.dnd5e.characterforge.exception.TraitNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
+import com.jawbr.dnd5e.characterforge.model.entity.Trait;
 import com.jawbr.dnd5e.characterforge.repository.TraitRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TraitService {
@@ -26,7 +30,7 @@ public class TraitService {
     }
 
     /**
-     * Method to find all traits inside the database
+     * Method to find all traits inside the database in alphabetical order
      *
      * @return a List containing all traits mapped into FindAllDTOResponse
      * @throws TraitNotFoundException when no traits are found inside the database
@@ -35,6 +39,9 @@ public class TraitService {
     public FindAllDTOResponse findAllTraits() {
         return Optional.of(traitRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(Trait::getTraitName))
+                        .collect(Collectors.toList()))
                 .map(traitDTOResponseMapper)
                 .orElseThrow(() -> new TraitNotFoundException("No traits found."));
     }

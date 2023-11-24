@@ -49,7 +49,6 @@ public class Language {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<TypicalSpeakers> typicalSpeakers;
 
-    @Column(nullable = false)
     private String script;
 
     @Column(nullable = false, unique = true, length = 128)

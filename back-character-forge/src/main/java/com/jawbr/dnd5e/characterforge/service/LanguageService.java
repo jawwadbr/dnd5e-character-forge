@@ -6,10 +6,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.language.LanguageDTOResponseMap
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.language.LanguageDTO;
 import com.jawbr.dnd5e.characterforge.exception.LanguageNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
 import com.jawbr.dnd5e.characterforge.repository.LanguageRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
@@ -34,7 +38,7 @@ public class LanguageService {
     }
 
     /**
-     * Method to find all languages inside the database
+     * Method to find all languages inside the database in alphabetical order
      *
      * @return a List containing all languages mapped into LanguageDTO
      * @throws LanguageNotFoundException when no languages are found inside the database
@@ -43,6 +47,9 @@ public class LanguageService {
     public FindAllDTOResponse findAllLanguages() {
         return Optional.of(languageRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(Language::getName))
+                        .collect(Collectors.toList()))
                 .map(languageDTOResponseMapper)
                 .orElseThrow(() -> new LanguageNotFoundException("No languages found."));
     }

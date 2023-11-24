@@ -6,10 +6,14 @@ import com.jawbr.dnd5e.characterforge.dto.mapper.race.RaceDTOResponseMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
 import com.jawbr.dnd5e.characterforge.exception.RaceNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Language;
+import com.jawbr.dnd5e.characterforge.model.entity.Race;
 import com.jawbr.dnd5e.characterforge.repository.RaceRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="https://www.linkedin.com/in/bradley-sperling/">Bradley Jawwad</a>
@@ -34,7 +38,7 @@ public class RaceService {
     }
 
     /**
-     * Method to find all Races inside the database
+     * Method to find all Races inside the database in alphabetical order
      *
      * @return a List containing all Races mapped into RaceDTO
      * @throws RaceNotFoundException when no races are found inside the database
@@ -43,6 +47,9 @@ public class RaceService {
     public FindAllDTOResponse findAllRaces() {
         return Optional.of(raceRepository.findAll())
                 .filter(list -> !list.isEmpty())
+                .map(list -> list.stream()
+                        .sorted(Comparator.comparing(Race::getRaceName))
+                        .collect(Collectors.toList()))
                 .map(raceDTOResponseMapper)
                 .orElseThrow(() -> new RaceNotFoundException("No races found."));
     }
