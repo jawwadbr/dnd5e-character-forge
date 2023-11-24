@@ -46,7 +46,8 @@ public class Language {
     @Enumerated(EnumType.STRING)
     private LanguageType type;
 
-    // typicalSpeakers
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<TypicalSpeakers> typicalSpeakers;
 
     @Column(nullable = false)
     private String script;

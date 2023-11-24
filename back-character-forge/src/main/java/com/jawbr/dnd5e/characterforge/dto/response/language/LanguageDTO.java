@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jawbr.dnd5e.characterforge.model.util.LanguageType;
 import lombok.Builder;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 public record LanguageDTO(
@@ -11,7 +13,7 @@ public record LanguageDTO(
         String name,
         String desc,
         LanguageType type,
-        // typical_speakers
+        List<String> typical_speakers,
         String script,
         String url
 ) {
