@@ -2,14 +2,14 @@ version: '3.1'
 
 services:
   db:
-    image: mysql:8.0.27
+    image: mysql:8.0.35
     volumes:
       - dbase:/var/lib/mysql
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: dnd5e_character-forge_db
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   phpmyadmin:
     image: phpmyadmin
@@ -27,7 +27,6 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/dnd5e_character-forge_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
     restart: on-failure
 
 volumes:
