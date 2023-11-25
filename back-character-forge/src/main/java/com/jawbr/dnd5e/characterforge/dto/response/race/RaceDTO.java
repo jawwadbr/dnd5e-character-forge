@@ -21,7 +21,6 @@ public record RaceDTO(
         Size size,
         String size_description,
         List<EntityReferenceDTO> starting_proficiencies,
-        //
         OptionSetDTO starting_proficiency_options,
         List<EntityReferenceDTO> languages,
         OptionSetDTO language_options,
