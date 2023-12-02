@@ -6,6 +6,7 @@ target/
 
 TestService.java
 TestController.java
+IgnoreCoverage.java
 
 ### STS ###
 .apt_generated
