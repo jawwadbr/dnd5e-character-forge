@@ -6,8 +6,10 @@ import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyDTO;
 import com.jawbr.dnd5e.characterforge.exception.ProficiencyNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.Class;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import com.jawbr.dnd5e.characterforge.model.entity.Race;
+import com.jawbr.dnd5e.characterforge.model.util.HitDie;
 import com.jawbr.dnd5e.characterforge.model.util.ProficiencyType;
 import com.jawbr.dnd5e.characterforge.model.util.Size;
 import com.jawbr.dnd5e.characterforge.repository.ProficiencyRepository;
@@ -66,13 +68,23 @@ class ProficiencyServiceTest {
         List<Race> raceList = new ArrayList<>();
         raceList.add(race);
 
+        Class theClass = Class.builder()
+                .indexName("paladin")
+                .className("Paladin")
+                .hitDie(HitDie.d10)
+                .url("/api/classes/paladin")
+                .build();
+
         proficiency = Proficiency.builder()
                 .indexName("skill-perception")
                 .type(ProficiencyType.Skills)
                 .name("Skill: Perception")
                 .url("/api/proficiencies/skill-perception")
                 .races(raceList)
+                .classes(List.of(theClass))
                 .build();
+
+        //theClass.setProficiencies(List.of(proficiency));
 
         EntityReferenceDTO proficiencyRaceDTO = EntityReferenceDTO.builder()
                 .index("elf")
@@ -83,12 +95,19 @@ class ProficiencyServiceTest {
         List<EntityReferenceDTO> proficiencyRaceDTOS = new ArrayList<>();
         proficiencyRaceDTOS.add(proficiencyRaceDTO);
 
+        EntityReferenceDTO theClassEntityReference = EntityReferenceDTO.builder()
+                .index(theClass.getIndexName())
+                .name(theClass.getClassName())
+                .url(theClass.getUrl())
+                .build();
+
         proficiencyDTO = ProficiencyDTO.builder()
                 .index("skill-perception")
                 .type(ProficiencyType.Skills)
                 .name("Skill: Perception")
                 .url("/api/proficiencies/skill-perception")
                 .races(proficiencyRaceDTOS)
+                .classes(List.of(theClassEntityReference))
                 .build();
 
         EntityReferenceDTO proficiencyEntityReferenceDTO = EntityReferenceDTO.builder()

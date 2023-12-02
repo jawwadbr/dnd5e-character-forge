@@ -2,9 +2,11 @@ package com.jawbr.dnd5e.characterforge.dto.mapper.proficiency;
 
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyDTO;
+import com.jawbr.dnd5e.characterforge.model.entity.Class;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -34,10 +36,20 @@ public class ProficiencyDTOMapper implements Function<Proficiency, ProficiencyDT
                         .build())
         ).collect(Collectors.toList());
 
+        List<EntityReferenceDTO> proficiencyClasses = new ArrayList<>();
+        for(Class theClass : proficiency.getClasses()) {
+            proficiencyClasses.add(EntityReferenceDTO.builder()
+                            .index(theClass.getIndexName())
+                            .name(theClass.getClassName())
+                            .url(theClass.getUrl())
+                    .build());
+        }
+
         return new ProficiencyDTO(
                 proficiency.getIndexName(),
                 proficiency.getType(),
                 proficiency.getName(),
+                proficiencyClasses,
                 proficiencyRaceDTOS,
                 proficiency.getUrl()
         );

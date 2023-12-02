@@ -49,6 +49,8 @@ public class Proficiency {
     private String url;
 
     // classes that this proficiency is part
+    @ManyToMany(mappedBy = "proficiencies", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    private List<Class> classes;
 
     // races that this proficiency is part
     @ManyToMany(mappedBy = "proficiencies", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})

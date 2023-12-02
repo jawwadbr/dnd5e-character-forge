@@ -13,7 +13,7 @@ public record ProficiencyDTO(
         String index,
         ProficiencyType type,
         String name,
-        // classes
+        List<EntityReferenceDTO> classes,
         List<EntityReferenceDTO> races,
         String url
         // reference

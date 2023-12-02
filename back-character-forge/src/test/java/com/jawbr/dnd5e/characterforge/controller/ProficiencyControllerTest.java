@@ -7,7 +7,6 @@ import com.jawbr.dnd5e.characterforge.exception.ProficiencyNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.util.ProficiencyType;
 import com.jawbr.dnd5e.characterforge.service.ProficiencyService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -72,6 +71,11 @@ class ProficiencyControllerTest {
                 .index("skill-perception")
                 .type(ProficiencyType.Skills)
                 .name("Skill: Perception")
+                .classes(List.of(EntityReferenceDTO.builder()
+                        .index("paladin")
+                        .name("Paladin")
+                        .url("/api/classes/paladin")
+                        .build()))
                 .races(list)
                 .url("/api/proficiencies/skill-perception")
                 .build();
@@ -104,6 +108,9 @@ class ProficiencyControllerTest {
                 .andExpect(jsonPath("$.races[0].index", is(race.index())))
                 .andExpect(jsonPath("$.races[0].name", is(race.name())))
                 .andExpect(jsonPath("$.races[0].url", is(race.url())))
+                .andExpect(jsonPath("$.classes[0].index", is(proficiencyDTO.classes().get(0).index())))
+                .andExpect(jsonPath("$.classes[0].name", is(proficiencyDTO.classes().get(0).name())))
+                .andExpect(jsonPath("$.classes[0].url", is(proficiencyDTO.classes().get(0).url())))
                 .andExpect(jsonPath("$.url", is(proficiencyDTO.url())))
                 .andDo(MockMvcResultHandlers.print());
 
