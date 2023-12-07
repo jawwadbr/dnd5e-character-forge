@@ -5,7 +5,11 @@ import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.theClass.ClassDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.theClass.MultiClassingPrerequisitesDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.theClass.PrerequisitesDTO;
+import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
 import com.jawbr.dnd5e.characterforge.model.entity.Class;
+import com.jawbr.dnd5e.characterforge.model.entity.MultiClassing;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +54,40 @@ public class ClassDTOMapper implements Function<Class, ClassDTO> {
                     .build());
         }
 
+        List<EntityReferenceDTO> savingThrowsList = new ArrayList<>();
+        for(AbilityScore abilityScore : aClass.getSavingThrows()) {
+            proficinciesList.add(EntityReferenceDTO.builder()
+                    .url(abilityScore.getUrl())
+                    .index(abilityScore.getIndexName())
+                    .name(abilityScore.getShortName())
+                    .build());
+        }
+
+        List<PrerequisitesDTO> prerequisitesDTOS = new ArrayList<>();
+        if(aClass.getMultiClassingScores() != null) {
+            for(MultiClassing multiClassing : aClass.getMultiClassingScores()) {
+                prerequisitesDTOS.add(PrerequisitesDTO.builder()
+                        .ability_score(EntityReferenceDTO.builder()
+                                .index(multiClassing.getAbilityScore().getIndexName())
+                                .url(multiClassing.getAbilityScore().getUrl())
+                                .name(multiClassing.getAbilityScore().getShortName())
+                                .build())
+                        .minimum_score(multiClassing.getMinimumScore())
+                        .build());
+            }
+        }
+        MultiClassingPrerequisitesDTO prerequisites = MultiClassingPrerequisitesDTO.builder()
+                .prerequisites(prerequisitesDTOS)
+                .build();
+
         return new ClassDTO(
                 aClass.getIndexName(),
                 aClass.getClassName(),
                 aClass.getHitDie().getValue(),
                 proficiencyOptions,
                 proficinciesList,
+                savingThrowsList,
+                prerequisites,
                 aClass.getUrl()
         );
     }

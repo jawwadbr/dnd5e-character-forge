@@ -16,10 +16,12 @@ public record ClassDTO(
         OptionSetDTO proficiency_choices,
         List<EntityReferenceDTO> proficiencies,
         // saving throws
+        List<EntityReferenceDTO> saving_throws,
         // starting equips
         // starting equips options
         // class levels
-        // multiclassing - might be done later or not even be implemented
+        // multiclassing
+        MultiClassingPrerequisitesDTO multi_classing,
         // subclasses
         // spellcasting
         // spells

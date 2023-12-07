@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -59,12 +60,17 @@ public class Class {
     private List<Proficiency> proficiencies;
 
     // saving throws
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    private List<AbilityScore> savingThrows;
 
     // starting equips
     // starting equips options
 
     // class levels
-    // multiclassing - might be done later or not even be implemented
+    // multiclassing
+    @ManyToMany(mappedBy = "theClass", cascade = CascadeType.ALL)
+    private List<MultiClassing> multiClassingScores;
+
     // subclasses
     // spellcasting
     // spells
