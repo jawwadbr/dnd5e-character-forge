@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,6 +43,9 @@ class RaceControllerTest {
 
     @MockBean
     private RaceService raceService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/races";
 
@@ -156,103 +161,27 @@ class RaceControllerTest {
 
     @Test
     void findAllRaces() throws Exception {
+        String raceFindAllResponseJson = objectMapper.writeValueAsString(raceFindAllResponse);
+
         when(raceService.findAllRaces()).thenReturn(raceFindAllResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(raceFindAllResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", is(raceForFindAll.index())))
-                .andExpect(jsonPath("$.results[0].name", is(raceForFindAll.name())))
-                .andExpect(jsonPath("$.results[0].url", is(raceForFindAll.url())))
+                .andExpect(content().json(raceFindAllResponseJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void findRaceByIndexName() throws Exception {
+        String raceDTOJson = objectMapper.writeValueAsString(raceDTO);
+
         when(raceService.findRaceByIndexName(raceDTO.index())).thenReturn(raceDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + raceDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(raceDTO.index())))
-                .andExpect(jsonPath("$.name", is(raceDTO.name())))
-                .andExpect(jsonPath("$.speed", is(raceDTO.speed())))
-                // ability bonuses
-                .andExpect(jsonPath("$.ability_bonuses[0].ability_score.index",
-                        is(raceAbilityBonusesDTO.ability_score().index())))
-                .andExpect(jsonPath("$.ability_bonuses[0].ability_score.name",
-                        is(raceAbilityBonusesDTO.ability_score().name())))
-                .andExpect(jsonPath("$.ability_bonuses[0].ability_score.url",
-                        is(raceAbilityBonusesDTO.ability_score().url())))
-                .andExpect(jsonPath("$.ability_bonuses[0].bonus",
-                        is(raceAbilityBonusesDTO.bonus())))
-                //
-                .andExpect(jsonPath("$.alignment", is(raceDTO.alignment())))
-                .andExpect(jsonPath("$.age", is(raceDTO.age())))
-                .andExpect(jsonPath("$.size", is(raceDTO.size().name())))
-                .andExpect(jsonPath("$.size_description", is(raceDTO.size_description())))
-                // languages
-                .andExpect(jsonPath("$.languages[0].index", is(raceDTO.languages().get(0).index())))
-                .andExpect(jsonPath("$.languages[0].name", is(raceDTO.languages().get(0).name())))
-                .andExpect(jsonPath("$.languages[0].url", is(raceDTO.languages().get(0).url())))
-
-                .andExpect(jsonPath("$.language_desc", is(raceDTO.language_desc())))
-                // starting_proficiencies
-                .andExpect(jsonPath("$.starting_proficiencies[0].index",
-                        is(raceDTO.starting_proficiencies().get(0).index())))
-                .andExpect(jsonPath("$.starting_proficiencies[0].name",
-                        is(raceDTO.starting_proficiencies().get(0).name())))
-                .andExpect(jsonPath("$.starting_proficiencies[0].url",
-                        is(raceDTO.starting_proficiencies().get(0).url())))
-                // subraces
-                .andExpect(jsonPath("$.subraces[0].index",
-                        is(raceDTO.subraces().get(0).index())))
-                .andExpect(jsonPath("$.subraces[0].name",
-                        is(raceDTO.subraces().get(0).name())))
-                .andExpect(jsonPath("$.subraces[0].url",
-                        is(raceDTO.subraces().get(0).url())))
-                // trait
-                .andExpect(jsonPath("$.traits[0].index",
-                        is(raceDTO.traits().get(0).index())))
-                .andExpect(jsonPath("$.traits[0].name",
-                        is(raceDTO.traits().get(0).name())))
-                .andExpect(jsonPath("$.traits[0].url",
-                        is(raceDTO.traits().get(0).url())))
-                // language_options
-                .andExpect(jsonPath("$.language_options.choose",
-                        is(raceDTO.language_options().choose())))
-                .andExpect(jsonPath("$.language_options.type",
-                        is(raceDTO.language_options().type().name())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.index",
-                        is(raceDTO.language_options().from().options().get(0).item().index())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.name",
-                        is(raceDTO.language_options().from().options().get(0).item().name())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.url",
-                        is(raceDTO.language_options().from().options().get(0).item().url())))
-                // starting_proficiency_options
-                .andExpect(jsonPath("$.starting_proficiency_options.choose",
-                        is(raceDTO.starting_proficiency_options().choose())))
-                .andExpect(jsonPath("$.starting_proficiency_options.type",
-                        is(raceDTO.starting_proficiency_options().type().name())))
-                .andExpect(jsonPath("$.starting_proficiency_options.from.options[0].item.index",
-                        is(raceDTO.starting_proficiency_options().from().options().get(0).item().index())))
-                .andExpect(jsonPath("$.starting_proficiency_options.from.options[0].item.name",
-                        is(raceDTO.starting_proficiency_options().from().options().get(0).item().name())))
-                .andExpect(jsonPath("$.starting_proficiency_options.from.options[0].item.url",
-                        is(raceDTO.starting_proficiency_options().from().options().get(0).item().url())))
-                // ability bonuses options
-                .andExpect(jsonPath("$.ability_bonus_options.choose",
-                        is(raceDTO.ability_bonus_options().choose())))
-                .andExpect(jsonPath("$.ability_bonus_options.type",
-                        is(raceDTO.ability_bonus_options().type().name())))
-                .andExpect(jsonPath("$.ability_bonus_options.from.options[0].ability_score.index",
-                        is(raceDTO.ability_bonus_options().from().options().get(0).ability_score().index())))
-                .andExpect(jsonPath("$.ability_bonus_options.from.options[0].ability_score.name",
-                        is(raceDTO.ability_bonus_options().from().options().get(0).ability_score().name())))
-                .andExpect(jsonPath("$.ability_bonus_options.from.options[0].ability_score.url",
-                        is(raceDTO.ability_bonus_options().from().options().get(0).ability_score().url())))
-                .andExpect(jsonPath("$.url", is(raceDTO.url())))
+                .andExpect(content().json(raceDTOJson))
                 .andDo(MockMvcResultHandlers.print());
 
     }

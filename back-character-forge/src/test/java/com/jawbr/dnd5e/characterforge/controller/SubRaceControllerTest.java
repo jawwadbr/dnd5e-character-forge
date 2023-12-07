@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,6 +41,9 @@ class SubRaceControllerTest {
 
     @MockBean
     private SubRaceService subRaceService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/subraces";
 
@@ -123,73 +128,27 @@ class SubRaceControllerTest {
 
     @Test
     void findAllSubRaces() throws Exception {
+        String subRaceFindAllResponseJson = objectMapper.writeValueAsString(subRaceFindAllResponse);
+
         when(subRaceService.findAllSubRaces()).thenReturn(subRaceFindAllResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(subRaceFindAllResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", is(subRaceForFindAll.index())))
-                .andExpect(jsonPath("$.results[0].name", is(subRaceForFindAll.name())))
-                .andExpect(jsonPath("$.results[0].url", is(subRaceForFindAll.url())))
+                .andExpect(content().json(subRaceFindAllResponseJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void findSubRaceByIndexName() throws Exception {
+        String subRaceDTOJson = objectMapper.writeValueAsString(subRaceDTO);
+
         when(subRaceService.findSubRaceByIndexName(subRaceDTO.index())).thenReturn(subRaceDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + subRaceDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(subRaceDTO.index())))
-                .andExpect(jsonPath("$.name", is(subRaceDTO.name())))
-                .andExpect(jsonPath("$.race.index", is(subRaceDTO.race().index())))
-                .andExpect(jsonPath("$.race.name", is(subRaceDTO.race().name())))
-                .andExpect(jsonPath("$.race.url", is(subRaceDTO.race().url())))
-                .andExpect(jsonPath("$.desc", is(subRaceDTO.desc())))
-                // ability bonuses
-                .andExpect(jsonPath("$.ability_bonuses[0].bonus",
-                        is(subRaceDTO.ability_bonuses().get(0).bonus())))
-                .andExpect(jsonPath("$.ability_bonuses[0].ability_score.index",
-                        is(subRaceDTO.ability_bonuses().get(0).ability_score().index())))
-                .andExpect(jsonPath("$.ability_bonuses[0].ability_score.name",
-                        is(subRaceDTO.ability_bonuses().get(0).ability_score().name())))
-                .andExpect(jsonPath("$.ability_bonuses[0].ability_score.url",
-                        is(subRaceDTO.ability_bonuses().get(0).ability_score().url())))
-                // starting_proficiencies
-                .andExpect(jsonPath("$.starting_proficiencies[0].index",
-                        is(subRaceDTO.starting_proficiencies().get(0).index())))
-                .andExpect(jsonPath("$.starting_proficiencies[0].name",
-                        is(subRaceDTO.starting_proficiencies().get(0).name())))
-                .andExpect(jsonPath("$.starting_proficiencies[0].url",
-                        is(subRaceDTO.starting_proficiencies().get(0).url())))
-                // languages
-                .andExpect(jsonPath("$.languages[0].index",
-                        is(subRaceDTO.languages().get(0).index())))
-                .andExpect(jsonPath("$.languages[0].name",
-                        is(subRaceDTO.languages().get(0).name())))
-                .andExpect(jsonPath("$.languages[0].url",
-                        is(subRaceDTO.languages().get(0).url())))
-                // language_options
-                .andExpect(jsonPath("$.language_options.choose",
-                        is(subRaceDTO.language_options().choose())))
-                .andExpect(jsonPath("$.language_options.type",
-                        is(subRaceDTO.language_options().type().name())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.index",
-                        is(subRaceDTO.language_options().from().options().get(0).item().index())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.name",
-                        is(subRaceDTO.language_options().from().options().get(0).item().name())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.url",
-                        is(subRaceDTO.language_options().from().options().get(0).item().url())))
-                // racial_traits
-                .andExpect(jsonPath("$.racial_traits[0].index",
-                        is(subRaceDTO.racial_traits().get(0).index())))
-                .andExpect(jsonPath("$.racial_traits[0].name",
-                        is(subRaceDTO.racial_traits().get(0).name())))
-                .andExpect(jsonPath("$.racial_traits[0].url",
-                        is(subRaceDTO.racial_traits().get(0).url())))
-                .andExpect(jsonPath("$.url", is(subRaceDTO.url())))
+                .andExpect(content().json(subRaceDTOJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 

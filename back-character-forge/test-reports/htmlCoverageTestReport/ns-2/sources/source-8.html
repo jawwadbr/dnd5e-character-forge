@@ -1,0 +1,133 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TraitController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.jawbr.dnd5e.characterforge.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: TraitController (com.jawbr.dnd5e.characterforge.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TraitController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.jawbr.dnd5e.characterforge.controller;
+&nbsp;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.trait.TraitDTO;
+&nbsp;import com.jawbr.dnd5e.characterforge.service.TraitService;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/traits&quot;)
+&nbsp;public class TraitController {
+&nbsp;
+&nbsp;    private final TraitService traitService;
+&nbsp;
+<b class="fc">&nbsp;    public TraitController(TraitService traitService) {</b>
+<b class="fc">&nbsp;        this.traitService = traitService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public FindAllDTOResponse findAllTraits() {
+<b class="fc">&nbsp;        return traitService.findAllTraits();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{indexName}&quot;)
+&nbsp;    public TraitDTO findTraitByIndexName(@PathVariable String indexName) {
+<b class="fc">&nbsp;        return traitService.findTraitByIndexName(indexName);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 01:41</div>
+</div>
+</body>
+</html>

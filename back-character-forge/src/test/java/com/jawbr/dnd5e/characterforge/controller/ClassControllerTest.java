@@ -1,17 +1,21 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.theClass.ClassDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.theClass.MultiClassingPrerequisitesDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.theClass.PrerequisitesDTO;
 import com.jawbr.dnd5e.characterforge.exception.ClassNotFoundException;
 import com.jawbr.dnd5e.characterforge.model.util.HitDie;
 import com.jawbr.dnd5e.characterforge.model.util.OptionType;
 import com.jawbr.dnd5e.characterforge.service.ClassService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -26,6 +30,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,6 +43,9 @@ public class ClassControllerTest {
 
     @MockBean
     private ClassService classService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/classes";
 
@@ -69,6 +77,12 @@ public class ClassControllerTest {
                 .url("/api/proficiencies/skill-perception")
                 .build();
 
+        EntityReferenceDTO savingThrowsDTO = EntityReferenceDTO.builder()
+                .name("CHA")
+                .index("cha")
+                .url("/api/ability-scores/cha")
+                .build();
+
         classDTO = ClassDTO.builder()
                 .index("paladin")
                 .name("Paladin")
@@ -84,49 +98,40 @@ public class ClassControllerTest {
                                 .build())
                         .build())
                 .proficiencies(List.of(proficiencyEntityReferenceDTO))
+                .saving_throws(List.of(savingThrowsDTO))
+                .multi_classing(MultiClassingPrerequisitesDTO.builder()
+                        .prerequisites(List.of(PrerequisitesDTO.builder()
+                                .ability_score(savingThrowsDTO)
+                                .minimum_score(13)
+                                .build()))
+                        .build())
                 .url("/api/classes/paladin")
                 .build();
     }
 
     @Test
     void findAllClasses() throws Exception {
+        String classResponseJson = objectMapper.writeValueAsString(classResponse);
+
         when(classService.findAllClasses()).thenReturn(classResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(classResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", is(classEntityReferenceDTO.index())))
-                .andExpect(jsonPath("$.results[0].name", is(classEntityReferenceDTO.name())))
-                .andExpect(jsonPath("$.results[0].url", is(classEntityReferenceDTO.url())))
+                .andExpect(content().json(classResponseJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void findClassByIndexName() throws Exception {
+        String classDTOJson = objectMapper.writeValueAsString(classDTO);
+
         when(classService.findClassByIndexName(classDTO.index())).thenReturn(classDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + classDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(classDTO.index())))
-                .andExpect(jsonPath("$.name", is(classDTO.name())))
-                .andExpect(jsonPath("$.hit_die", is(classDTO.hit_die())))
-                // proficiency_choices
-                .andExpect(jsonPath("$.proficiency_choices.choose", is(classDTO.proficiency_choices().choose())))
-                .andExpect(jsonPath("$.proficiency_choices.type", is(classDTO.proficiency_choices().type().name())))
-                .andExpect(jsonPath("$.proficiency_choices.desc", is(classDTO.proficiency_choices().desc())))
-                .andExpect(jsonPath("$.proficiency_choices.from.options[0].item.index",
-                        is(classDTO.proficiency_choices().from().options().get(0).item().index())))
-                .andExpect(jsonPath("$.proficiency_choices.from.options[0].item.name",
-                        is(classDTO.proficiency_choices().from().options().get(0).item().name())))
-                .andExpect(jsonPath("$.proficiency_choices.from.options[0].item.url",
-                        is(classDTO.proficiency_choices().from().options().get(0).item().url())))
-                //
-                .andExpect(jsonPath("$.proficiencies[0].index", is(classDTO.proficiencies().get(0).index())))
-                .andExpect(jsonPath("$.proficiencies[0].name", is(classDTO.proficiencies().get(0).name())))
-                .andExpect(jsonPath("$.proficiencies[0].url", is(classDTO.proficiencies().get(0).url())))
-                .andExpect(jsonPath("$.url", is(classDTO.url())))
+                .andExpect(content().json(classDTOJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 

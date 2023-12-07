@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.abilityScore.AbilityScoreDTO;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,6 +35,9 @@ class AbilityScoreControllerTest {
 
     @MockBean
     private AbilityScoreService abilityScoreService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/ability-scores";
 
@@ -78,35 +83,27 @@ class AbilityScoreControllerTest {
 
     @Test
     void findAllAbilityScores() throws Exception {
+        String abilityScoreResponseJson = objectMapper.writeValueAsString(abilityScoreResponse);
 
         when(abilityScoreService.findAllAbilityScores()).thenReturn(abilityScoreResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(abilityScoreResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", is(abilityScoreForFindAll.index())))
-                .andExpect(jsonPath("$.results[0].name", is(abilityScoreForFindAll.name())))
-                .andExpect(jsonPath("$.results[0].url", is(abilityScoreForFindAll.url())))
+                .andExpect(content().json(abilityScoreResponseJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void findAbilityScoreByIndexName() throws Exception {
+        String abilityScoreDTOJson = objectMapper.writeValueAsString(abilityScoreDTO);
 
         when(abilityScoreService.findAbilityScoresByIndexName(abilityScoreDTO.index())).thenReturn(abilityScoreDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + abilityScoreDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(abilityScoreDTO.index())))
-                .andExpect(jsonPath("$.short_name", is(abilityScoreDTO.short_name())))
-                .andExpect(jsonPath("$.full_name", is(abilityScoreDTO.full_name())))
-                .andExpect(jsonPath("$.desc", is(abilityScoreDTO.desc())))
-                .andExpect(jsonPath("$.skills[0].index", is(abilitySkills.index())))
-                .andExpect(jsonPath("$.skills[0].name", is(abilitySkills.name())))
-                .andExpect(jsonPath("$.skills[0].url", is(abilitySkills.url())))
-                .andExpect(jsonPath("$.url", is(abilityScoreDTO.url())))
+                .andExpect(content().json(abilityScoreDTOJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 

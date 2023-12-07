@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.proficiency.ProficiencyDTO;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -34,6 +36,9 @@ class ProficiencyControllerTest {
 
     @MockBean
     private ProficiencyService proficiencyService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/proficiencies";
 
@@ -83,35 +88,27 @@ class ProficiencyControllerTest {
 
     @Test
     void findAllProficiencies() throws Exception {
+        String proficiencyResponseJson = objectMapper.writeValueAsString(proficiencyResponse);
+
         when(proficiencyService.findAllProficiencies()).thenReturn(proficiencyResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(proficiencyResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", is(proficiencyForFindAll.index())))
-                .andExpect(jsonPath("$.results[0].name", is(proficiencyForFindAll.name())))
-                .andExpect(jsonPath("$.results[0].url", is(proficiencyForFindAll.url())))
+                .andExpect(content().json(proficiencyResponseJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void findProficiencyByIndexName() throws Exception {
+        String proficiencyDTOJson = objectMapper.writeValueAsString(proficiencyDTO);
+
         when(proficiencyService.findByIndexName(proficiencyDTO.index())).thenReturn(proficiencyDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + proficiencyDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(proficiencyDTO.index())))
-                .andExpect(jsonPath("$.type", is(proficiencyDTO.type().getDisplayName())))
-                .andExpect(jsonPath("$.name", is(proficiencyDTO.name())))
-                .andExpect(jsonPath("$.races[0].index", is(race.index())))
-                .andExpect(jsonPath("$.races[0].name", is(race.name())))
-                .andExpect(jsonPath("$.races[0].url", is(race.url())))
-                .andExpect(jsonPath("$.classes[0].index", is(proficiencyDTO.classes().get(0).index())))
-                .andExpect(jsonPath("$.classes[0].name", is(proficiencyDTO.classes().get(0).name())))
-                .andExpect(jsonPath("$.classes[0].url", is(proficiencyDTO.classes().get(0).url())))
-                .andExpect(jsonPath("$.url", is(proficiencyDTO.url())))
+                .andExpect(content().json(proficiencyDTOJson))
                 .andDo(MockMvcResultHandlers.print());
 
     }

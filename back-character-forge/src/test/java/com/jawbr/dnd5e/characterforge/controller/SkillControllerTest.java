@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.skill.SkillDTO;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -33,6 +35,9 @@ class SkillControllerTest {
 
     @MockBean
     private SkillService skillService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/skills";
 
@@ -75,33 +80,28 @@ class SkillControllerTest {
 
     @Test
     void findAllSkills() throws Exception {
+        String skillResponseJson = objectMapper.writeValueAsString(skillResponse);
+
         when(skillService.findAllSkills()).thenReturn(skillResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(skillResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", is(skillForFindAll.index())))
-                .andExpect(jsonPath("$.results[0].name", is(skillForFindAll.name())))
-                .andExpect(jsonPath("$.results[0].url", is(skillForFindAll.url())))
+                .andExpect(content().json(skillResponseJson))
                 .andDo(MockMvcResultHandlers.print());
 
     }
 
     @Test
     void findSkillByIndexName() throws Exception {
+        String skillDTOJson = objectMapper.writeValueAsString(skillDTO);
+
         when(skillService.findSkillByIndexName(skillDTO.index())).thenReturn(skillDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + skillDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(skillDTO.index())))
-                .andExpect(jsonPath("$.name", is(skillDTO.name())))
-                .andExpect(jsonPath("$.desc", is(skillDTO.desc())))
-                .andExpect(jsonPath("$.url", is(skillDTO.url())))
-                .andExpect(jsonPath("$.ability_score.index", is(abilityScoreForSkill.index())))
-                .andExpect(jsonPath("$.ability_score.name", is(abilityScoreForSkill.name())))
-                .andExpect(jsonPath("$.ability_score.url", is(abilityScoreForSkill.url())))
+                .andExpect(content().json(skillDTOJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 

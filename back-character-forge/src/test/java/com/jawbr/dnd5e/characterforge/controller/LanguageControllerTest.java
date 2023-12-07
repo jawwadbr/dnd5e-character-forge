@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.language.LanguageDTO;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +38,9 @@ class LanguageControllerTest {
 
     @MockBean
     private LanguageService languageService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/languages";
 
@@ -72,34 +77,27 @@ class LanguageControllerTest {
 
     @Test
     void findAllLanguages() throws Exception {
+        String languageResponseJson = objectMapper.writeValueAsString(languageResponse);
+
         when(languageService.findAllLanguages()).thenReturn(languageResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(languageResponse.count())))
-                .andExpect(jsonPath("$.results[0].index", Matchers.is(languageForFindAll.index())))
-                .andExpect(jsonPath("$.results[0].name", Matchers.is(languageForFindAll.name())))
-                .andExpect(jsonPath("$.results[0].url", Matchers.is(languageForFindAll.url())))
+                .andExpect(content().json(languageResponseJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     void findLanguageByIndexName() throws Exception {
+        String languageDTOJson = objectMapper.writeValueAsString(languageDTO);
 
         when(languageService.findLanguageByIndexName(languageDTO.index())).thenReturn(languageDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + languageDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(languageDTO.index())))
-                .andExpect(jsonPath("$.name", is(languageDTO.name())))
-                .andExpect(jsonPath("$.desc", is(languageDTO.desc())))
-                .andExpect(jsonPath("$.type", is(languageDTO.type().name())))
-                .andExpect(jsonPath("$.script", is(languageDTO.script())))
-                .andExpect(jsonPath("$.typical_speakers").isArray())
-                .andExpect(jsonPath("$.typical_speakers[0]", is(languageDTO.typical_speakers().get(0))))
-                .andExpect(jsonPath("$.url", is(languageDTO.url())))
+                .andExpect(content().json(languageDTOJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 

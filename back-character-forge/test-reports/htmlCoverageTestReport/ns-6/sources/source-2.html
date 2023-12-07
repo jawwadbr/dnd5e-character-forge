@@ -1,0 +1,267 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > RaceDTOMapper</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.jawbr.dnd5e.characterforge.dto.mapper.race</a>
+</div>
+
+<h1>Coverage Summary for Class: RaceDTOMapper (com.jawbr.dnd5e.characterforge.dto.mapper.race)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RaceDTOMapper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    50%
+  </span>
+  <span class="absValue">
+    (1/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1,8%
+  </span>
+  <span class="absValue">
+    (2/109)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.jawbr.dnd5e.characterforge.dto.mapper.race;
+&nbsp;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
+&nbsp;import com.jawbr.dnd5e.characterforge.dto.response.race.RaceDTO;
+&nbsp;import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
+&nbsp;import com.jawbr.dnd5e.characterforge.model.entity.Language;
+&nbsp;import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
+&nbsp;import com.jawbr.dnd5e.characterforge.model.entity.Race;
+&nbsp;import com.jawbr.dnd5e.characterforge.model.entity.SubRace;
+&nbsp;import com.jawbr.dnd5e.characterforge.model.entity.Trait;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.function.Function;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;/**
+&nbsp; * Method to map {@link Race} entity to {@link RaceDTO}
+&nbsp; *
+&nbsp; * @author &lt;a href=&quot;https://www.linkedin.com/in/bradley-sperling/&quot;&gt;Bradley Jawwad&lt;/a&gt;
+&nbsp; */
+&nbsp;@Service
+&nbsp;public class RaceDTOMapper implements Function&lt;Race, RaceDTO&gt; {
+&nbsp;
+&nbsp;    private final RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper;
+&nbsp;
+<b class="fc">&nbsp;    public RaceDTOMapper(RaceAbilityBonusesDTOMapper raceAbilityBonusesDTOMapper) {</b>
+<b class="fc">&nbsp;        this.raceAbilityBonusesDTOMapper = raceAbilityBonusesDTOMapper;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public RaceDTO apply(Race race) {
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceDTO&gt; proficienciesList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(Proficiency proficiency : race.getProficiencies()) {</b>
+<b class="nc">&nbsp;            proficienciesList.add(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                    .name(proficiency.getName())</b>
+<b class="nc">&nbsp;                    .index(proficiency.getIndexName())</b>
+<b class="nc">&nbsp;                    .url(proficiency.getUrl())</b>
+<b class="nc">&nbsp;                    .build());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceDTO&gt; languagesList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(Language language : race.getLanguages()) {</b>
+<b class="nc">&nbsp;            languagesList.add(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                    .name(language.getName())</b>
+<b class="nc">&nbsp;                    .index(language.getIndexName())</b>
+<b class="nc">&nbsp;                    .url(language.getUrl())</b>
+<b class="nc">&nbsp;                    .build());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceDTO&gt; subRacesList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(SubRace subRace : race.getSubRaces()) {</b>
+<b class="nc">&nbsp;            subRacesList.add(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                    .name(subRace.getSubRaceName())</b>
+<b class="nc">&nbsp;                    .index(subRace.getIndexName())</b>
+<b class="nc">&nbsp;                    .url(subRace.getUrl())</b>
+<b class="nc">&nbsp;                    .build());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceDTO&gt; traitsList = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        for(Trait trait : race.getTraits()) {</b>
+<b class="nc">&nbsp;            traitsList.add(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                    .name(trait.getTraitName())</b>
+<b class="nc">&nbsp;                    .index(trait.getIndexName())</b>
+<b class="nc">&nbsp;                    .url(trait.getUrl())</b>
+<b class="nc">&nbsp;                    .build());</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceOptionDTO&gt; languageFromOptions = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        OptionSetDTO languageOptions = null;</b>
+<b class="nc">&nbsp;        if(race.getLanguageOptions() != null) {</b>
+<b class="nc">&nbsp;            for(Language language : race.getLanguageOptions().getFrom()) {</b>
+<b class="nc">&nbsp;                languageFromOptions.add(EntityReferenceOptionDTO.builder()</b>
+<b class="nc">&nbsp;                        .item(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                                .index(language.getIndexName())</b>
+<b class="nc">&nbsp;                                .name(language.getName())</b>
+<b class="nc">&nbsp;                                .url(language.getUrl())</b>
+<b class="nc">&nbsp;                                .build())</b>
+<b class="nc">&nbsp;                        .build());</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            languageOptions = OptionSetDTO.builder()</b>
+<b class="nc">&nbsp;                    .choose(race.getLanguageOptions().getChoose())</b>
+<b class="nc">&nbsp;                    .desc(race.getLanguageOptions().getDesc())</b>
+<b class="nc">&nbsp;                    .type(race.getLanguageOptions().getType())</b>
+<b class="nc">&nbsp;                    .from(FromOptionSetDTO.builder()</b>
+<b class="nc">&nbsp;                            .options(languageFromOptions)</b>
+<b class="nc">&nbsp;                            .build())</b>
+<b class="nc">&nbsp;                    .build();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceOptionDTO&gt; abilityScoreBonusesFromOptions = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        OptionSetDTO abilityScoreBonusesOptions = null;</b>
+<b class="nc">&nbsp;        if(race.getAbilityBonusesOptions() != null) {</b>
+<b class="nc">&nbsp;            for(AbilityScore abilityScore : race.getAbilityBonusesOptions().getFrom()) {</b>
+<b class="nc">&nbsp;                abilityScoreBonusesFromOptions.add(EntityReferenceOptionDTO.builder()</b>
+<b class="nc">&nbsp;                        .ability_score(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                                .index(abilityScore.getIndexName())</b>
+<b class="nc">&nbsp;                                .name(abilityScore.getShortName())</b>
+<b class="nc">&nbsp;                                .url(abilityScore.getUrl())</b>
+<b class="nc">&nbsp;                                .build())</b>
+<b class="nc">&nbsp;                        .bonus(race.getAbilityBonusesOptions().getBonus())</b>
+<b class="nc">&nbsp;                        .build());</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            abilityScoreBonusesOptions = OptionSetDTO.builder()</b>
+<b class="nc">&nbsp;                    .choose(race.getAbilityBonusesOptions().getChoose())</b>
+<b class="nc">&nbsp;                    .desc(race.getAbilityBonusesOptions().getDesc())</b>
+<b class="nc">&nbsp;                    .type(race.getAbilityBonusesOptions().getType())</b>
+<b class="nc">&nbsp;                    .from(FromOptionSetDTO.builder()</b>
+<b class="nc">&nbsp;                            .options(abilityScoreBonusesFromOptions)</b>
+<b class="nc">&nbsp;                            .build())</b>
+<b class="nc">&nbsp;                    .build();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        List&lt;EntityReferenceOptionDTO&gt; startingProficienciesFromOptions = new ArrayList&lt;&gt;();</b>
+<b class="nc">&nbsp;        OptionSetDTO startingProficiencies = null;</b>
+<b class="nc">&nbsp;        if(race.getProficiencyOptions() != null) {</b>
+<b class="nc">&nbsp;            for(Proficiency proficiency : race.getProficiencyOptions().getFrom()) {</b>
+<b class="nc">&nbsp;                startingProficienciesFromOptions.add(EntityReferenceOptionDTO.builder()</b>
+<b class="nc">&nbsp;                        .item(EntityReferenceDTO.builder()</b>
+<b class="nc">&nbsp;                                .index(proficiency.getIndexName())</b>
+<b class="nc">&nbsp;                                .name(proficiency.getName())</b>
+<b class="nc">&nbsp;                                .url(proficiency.getUrl())</b>
+<b class="nc">&nbsp;                                .build())</b>
+<b class="nc">&nbsp;                        .build());</b>
+<b class="nc">&nbsp;            }</b>
+<b class="nc">&nbsp;            startingProficiencies = OptionSetDTO.builder()</b>
+<b class="nc">&nbsp;                    .choose(race.getProficiencyOptions().getChoose())</b>
+<b class="nc">&nbsp;                    .desc(race.getProficiencyOptions().getDesc())</b>
+<b class="nc">&nbsp;                    .type(race.getProficiencyOptions().getType())</b>
+<b class="nc">&nbsp;                    .from(FromOptionSetDTO.builder()</b>
+<b class="nc">&nbsp;                            .options(startingProficienciesFromOptions)</b>
+<b class="nc">&nbsp;                            .build())</b>
+<b class="nc">&nbsp;                    .build();</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        return new RaceDTO(</b>
+<b class="nc">&nbsp;                race.getIndexName(),</b>
+<b class="nc">&nbsp;                race.getRaceName(),</b>
+<b class="nc">&nbsp;                race.getSpeed(),</b>
+<b class="nc">&nbsp;                race.getAbilityBonuses()</b>
+<b class="nc">&nbsp;                        .stream()</b>
+<b class="nc">&nbsp;                        .map(raceAbilityBonusesDTOMapper)</b>
+<b class="nc">&nbsp;                        .collect(Collectors.toList()),</b>
+&nbsp;                abilityScoreBonusesOptions,
+<b class="nc">&nbsp;                race.getAlignment(),</b>
+<b class="nc">&nbsp;                race.getAge_desc(),</b>
+<b class="nc">&nbsp;                race.getSize(),</b>
+<b class="nc">&nbsp;                race.getSize_desc(),</b>
+&nbsp;                proficienciesList,
+&nbsp;                startingProficiencies,
+&nbsp;                languagesList,
+&nbsp;                languageOptions,
+<b class="nc">&nbsp;                race.getLanguage_desc(),</b>
+&nbsp;                traitsList,
+&nbsp;                subRacesList,
+<b class="nc">&nbsp;                race.getUrl()</b>
+&nbsp;        );
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-07 01:41</div>
+</div>
+</body>
+</html>

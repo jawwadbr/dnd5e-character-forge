@@ -1,5 +1,6 @@
 package com.jawbr.dnd5e.characterforge.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.EntityReferenceOptionDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,6 +40,9 @@ public class TraitControllerTest {
 
     @MockBean
     private TraitService traitService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private final String PATH = "/api/traits";
 
@@ -120,72 +125,28 @@ public class TraitControllerTest {
 
     @Test
     void findAllTraits() throws Exception {
+        String traitResponseJson = objectMapper.writeValueAsString(traitResponse);
+
         when(traitService.findAllTraits()).thenReturn(traitResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.count", is(traitResponse.count())))
-                .andExpect(jsonPath("$.results").isArray())
-                .andExpect(jsonPath("$.results[0].index", is(traitsForFindAll.get(0).index())))
-                .andExpect(jsonPath("$.results[0].name", is(traitsForFindAll.get(0).name())))
-                .andExpect(jsonPath("$.results[0].url", is(traitsForFindAll.get(0).url())))
-                .andExpect(jsonPath("$.results[1].index", is(traitsForFindAll.get(1).index())))
-                .andExpect(jsonPath("$.results[1].name", is(traitsForFindAll.get(1).name())))
-                .andExpect(jsonPath("$.results[1].url", is(traitsForFindAll.get(1).url())))
+                .andExpect(content().json(traitResponseJson))
                 .andDo(MockMvcResultHandlers.print());
 
     }
 
     @Test
     void findTraitByIndexName() throws Exception {
+        String traitDTOJson = objectMapper.writeValueAsString(traitDTO);
+
         when(traitService.findTraitByIndexName(traitDTO.index())).thenReturn(traitDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.get(PATH + "/" + traitDTO.index())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.index", is(traitDTO.index())))
-                .andExpect(jsonPath("$.races[0].index",
-                        is(traitDTO.races().get(0).index())))
-                .andExpect(jsonPath("$.races[0].name",
-                        is(traitDTO.races().get(0).name())))
-                .andExpect(jsonPath("$.races[0].url",
-                        is(traitDTO.races().get(0).url())))
-                .andExpect(jsonPath("$.subraces[0].index",
-                        is(traitDTO.subraces().get(0).index())))
-                .andExpect(jsonPath("$.subraces[0].name",
-                        is(traitDTO.subraces().get(0).name())))
-                .andExpect(jsonPath("$.subraces[0].url",
-                        is(traitDTO.subraces().get(0).url())))
-                .andExpect(jsonPath("$.name", is(traitDTO.name())))
-                .andExpect(jsonPath("$.desc", is(traitDTO.desc())))
-                .andExpect(jsonPath("$.proficiencies[0].index",
-                        is(traitDTO.proficiencies().get(0).index())))
-                .andExpect(jsonPath("$.proficiencies[0].name",
-                        is(traitDTO.proficiencies().get(0).name())))
-                .andExpect(jsonPath("$.proficiencies[0].url",
-                        is(traitDTO.proficiencies().get(0).url())))
-                .andExpect(jsonPath("$.proficiency_choices.choose",
-                        is(traitDTO.proficiency_choices().choose())))
-                .andExpect(jsonPath("$.proficiency_choices.type",
-                        is(traitDTO.proficiency_choices().type().name())))
-                .andExpect(jsonPath("$.proficiency_choices.from.options[0].item.index",
-                        is(traitDTO.proficiency_choices().from().options().get(0).item().index())))
-                .andExpect(jsonPath("$.proficiency_choices.from.options[0].item.name",
-                        is(traitDTO.proficiency_choices().from().options().get(0).item().name())))
-                .andExpect(jsonPath("$.proficiency_choices.from.options[0].item.url",
-                        is(traitDTO.proficiency_choices().from().options().get(0).item().url())))
-                .andExpect(jsonPath("$.language_options.choose",
-                        is(traitDTO.language_options().choose())))
-                .andExpect(jsonPath("$.language_options.type",
-                        is(traitDTO.language_options().type().name())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.index",
-                        is(traitDTO.language_options().from().options().get(0).item().index())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.name",
-                        is(traitDTO.language_options().from().options().get(0).item().name())))
-                .andExpect(jsonPath("$.language_options.from.options[0].item.url",
-                        is(traitDTO.language_options().from().options().get(0).item().url())))
-                .andExpect(jsonPath("$.url", is(traitDTO.url())))
+                .andExpect(content().json(traitDTOJson))
                 .andDo(MockMvcResultHandlers.print());
     }
 

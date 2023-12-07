@@ -8,9 +8,14 @@ import com.jawbr.dnd5e.characterforge.dto.response.FindAllDTOResponse;
 import com.jawbr.dnd5e.characterforge.dto.response.FromOptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.OptionSetDTO;
 import com.jawbr.dnd5e.characterforge.dto.response.theClass.ClassDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.theClass.MultiClassingPrerequisitesDTO;
+import com.jawbr.dnd5e.characterforge.dto.response.theClass.PrerequisitesDTO;
 import com.jawbr.dnd5e.characterforge.exception.ClassNotFoundException;
+import com.jawbr.dnd5e.characterforge.model.entity.AbilityScore;
 import com.jawbr.dnd5e.characterforge.model.entity.Class;
+import com.jawbr.dnd5e.characterforge.model.entity.MultiClassing;
 import com.jawbr.dnd5e.characterforge.model.entity.Proficiency;
+import com.jawbr.dnd5e.characterforge.model.entity.Skill;
 import com.jawbr.dnd5e.characterforge.model.entity.StartingProficiencyOption;
 import com.jawbr.dnd5e.characterforge.model.util.HitDie;
 import com.jawbr.dnd5e.characterforge.model.util.OptionType;
@@ -57,6 +62,25 @@ public class ClassServiceTest {
                 .url("/api/proficiencies/skill-perception")
                 .build();
 
+        AbilityScore abilityScore = AbilityScore.builder()
+                .shortName("CHA")
+                .indexName("cha")
+                .url("/api/ability-scores/cha")
+                .fullName("Charisma")
+                .desc("desc")
+                .skills(List.of(Skill.builder()
+                        .indexName("skill index")
+                        .name("skill name")
+                        .skillDesc("skill desc")
+                        .url("/api/skills/skill-index")
+                        .build()))
+                .build();
+
+        MultiClassing multiClassing = MultiClassing.builder()
+                .abilityScore(abilityScore)
+                .minimumScore(13)
+                .build();
+
         theClass = Class.builder()
                 .indexName("paladin")
                 .className("Paladin")
@@ -67,6 +91,8 @@ public class ClassServiceTest {
                         .from(List.of(proficiency))
                         .build())
                 .proficiencies(List.of(proficiency))
+                .savingThrows(List.of(abilityScore))
+                .multiClassingScores(List.of(multiClassing))
                 .url("/api/classes/paladin")
                 .build();
 
@@ -94,6 +120,21 @@ public class ClassServiceTest {
                 .url("/api/proficiencies/skill-perception")
                 .build();
 
+        EntityReferenceDTO savingThrowsDTO = EntityReferenceDTO.builder()
+                .name(theClass.getSavingThrows().get(0).getShortName())
+                .index(theClass.getSavingThrows().get(0).getIndexName())
+                .url(theClass.getSavingThrows().get(0).getUrl())
+                .build();
+
+        PrerequisitesDTO prerequisitesDTO = PrerequisitesDTO.builder()
+                .ability_score(EntityReferenceDTO.builder()
+                        .name(theClass.getMultiClassingScores().get(0).getAbilityScore().getShortName())
+                        .index(theClass.getMultiClassingScores().get(0).getAbilityScore().getIndexName())
+                        .url(theClass.getMultiClassingScores().get(0).getAbilityScore().getUrl())
+                        .build())
+                .minimum_score(theClass.getMultiClassingScores().get(0).getMinimumScore())
+                .build();
+
         classDTO = ClassDTO.builder()
                 .index(theClass.getIndexName())
                 .name(theClass.getClassName())
@@ -109,6 +150,10 @@ public class ClassServiceTest {
                                 .build())
                         .build())
                 .proficiencies(List.of(proficiencyEntityReferenceDTO))
+                .saving_throws(List.of(savingThrowsDTO))
+                .multi_classing(MultiClassingPrerequisitesDTO.builder()
+                        .prerequisites(List.of(prerequisitesDTO))
+                        .build())
                 .url(theClass.getUrl())
                 .build();
     }
